@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://b3xqb4wrpa43a"]
+
+[ext_resource type="Theme" uid="uid://c1vjx2e8rdafi" path="res://resources/font_light.tres" id="1_noapo"]
+[ext_resource type="StyleBox" uid="uid://buyqi8tle4bqv" path="res://resources/button_style_flat.tres" id="2_ptvrn"]
+[ext_resource type="Script" path="res://scripts/title_menu_button.gd" id="3_tgkdh"]
+
+[node name="NewGameButton" type="Button"]
+custom_minimum_size = Vector2(96, 0)
+theme = ExtResource("1_noapo")
+theme_override_colors/font_color = Color(0.615686, 0.615686, 0.615686, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_disabled_color = Color(0.188235, 0.188235, 0.188235, 1)
+theme_override_constants/outline_size = 0
+theme_override_styles/normal = ExtResource("2_ptvrn")
+theme_override_styles/hover = ExtResource("2_ptvrn")
+theme_override_styles/pressed = ExtResource("2_ptvrn")
+theme_override_styles/disabled = ExtResource("2_ptvrn")
+theme_override_styles/focus = ExtResource("2_ptvrn")
+text = "Placeholder"
+flat = true
+alignment = 2
+script = ExtResource("3_tgkdh")

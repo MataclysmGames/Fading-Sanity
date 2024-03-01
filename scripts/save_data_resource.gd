@@ -7,7 +7,8 @@ extends Resource
 
 # Settings
 @export var audio_bus_volumes : Dictionary = {
-	"Master": 1.0,
-	"SFX": 0.75,
-	"Ambient": 0.85
+	"Master": 0.5,
+	"Music": 0.9,
+	"SFX": 0.8,
+	"Ambient": 1.0
 }

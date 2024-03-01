@@ -11,6 +11,7 @@ func _ready():
 	settings_container.back_button.pressed.connect(on_settings_back_pressed)
 	settings_container.position += Vector2(1000, 0)
 	settings_container.back_button.set_deferred("disabled", true)
+	settings_container.visible = true
 
 func on_settings_pressed():
 	var tween = create_tween()

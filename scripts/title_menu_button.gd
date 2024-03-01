@@ -1,7 +1,7 @@
 class_name TitleButton
 extends Button
 
-const button_tween_duration : float = 0.25
+const button_tween_duration : float = 0.15
 
 var hover_effect_active : bool = false
 var initial_position : Vector2

@@ -2,7 +2,8 @@ extends Node2D
 
 @onready var audio_stream_player : AudioStreamPlayer = $AudioStreamPlayer
 
-var main_theme : Resource = load("res://external_assets/100870__xythe__loop.wav")
+var main_theme : AudioStream = load("res://external_assets/100870__xythe__loop.wav")
+var bell : AudioStream = load("res://external_assets/76405__dsp9000__old-church-bell.wav")
 var current_audio_resource = "none"
 
 func _ready():
@@ -10,11 +11,14 @@ func _ready():
 
 func play_main_theme(pitch : float = 1.0):
 	play_audio(main_theme, -30.0, pitch)
+	
+func play_bell():
+	play_audio(bell, -30.0, 1.0, 0.0)
 
 func play_audio(audio : AudioStream, volume : float = 0.0, pitch : float = 1.0, transition_duration : float = 2.0):
 	if not audio:
 		return
-	if audio.resource_path == current_audio_resource:
+	if audio.resource_path == current_audio_resource and audio.loop_mode == AudioStreamWAV.LOOP_FORWARD:
 		audio_stream_player.create_tween().tween_property(audio_stream_player, "volume_db", volume, transition_duration)
 		audio_stream_player.create_tween().tween_property(audio_stream_player, "pitch_scale", pitch, transition_duration)
 	else:

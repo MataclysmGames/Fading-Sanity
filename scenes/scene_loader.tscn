@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" path="res://scripts/scene_loader.gd" id="1_a8ovx"]
 
-[node name="SceneLoader" type="DirectionalLight2D"]
+[node name="SceneLoader" type="CanvasModulate"]
 color = Color(0, 0, 0, 1)
-energy = 0.0
 script = ExtResource("1_a8ovx")

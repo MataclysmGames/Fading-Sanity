@@ -47,6 +47,8 @@ text = "Continue"
 custom_minimum_size = Vector2(0, 0)
 layout_mode = 2
 focus_neighbor_top = NodePath("../ContinueButton")
+focus_neighbor_bottom = NodePath("../SettingsButton")
+focus_next = NodePath("../SettingsButton")
 focus_previous = NodePath("../ContinueButton")
 text = "New Game"
 

@@ -1,5 +1,7 @@
 extends Node2D
 
+const reduced_volume_db : float = -22.5
+
 @onready var audio_stream_player : AudioStreamPlayer = $AudioStreamPlayer
 
 var main_theme : AudioStream = load("res://external_assets/100870__xythe__loop.wav")
@@ -10,12 +12,12 @@ func _ready():
 	pass
 
 func play_main_theme(pitch : float = 1.0):
-	play_audio(main_theme, -30.0, pitch)
+	play_audio(main_theme, reduced_volume_db, pitch, 0.25)
 	
 func play_bell():
-	play_audio(bell, -30.0, 1.0, 0.0)
+	play_audio(bell, reduced_volume_db, 1.0, 0.0)
 
-func play_audio(audio : AudioStream, volume : float = 0.0, pitch : float = 1.0, transition_duration : float = 2.0):
+func play_audio(audio : AudioStream, volume : float = reduced_volume_db, pitch : float = 1.0, transition_duration : float = 2.0):
 	if not audio:
 		return
 	if audio.resource_path == current_audio_resource and audio.loop_mode == AudioStreamWAV.LOOP_FORWARD:

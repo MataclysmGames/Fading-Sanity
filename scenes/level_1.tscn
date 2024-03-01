@@ -6,8 +6,21 @@
 [node name="Level1" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource("1_55esl")]
+position = Vector2(42, 41)
 motion_mode = 1
 
 [node name="Icon" type="Sprite2D" parent="."]
-position = Vector2(-95, 31)
+position = Vector2(326, 64)
+texture = ExtResource("2_qio2b")
+
+[node name="Icon2" type="Sprite2D" parent="."]
+position = Vector2(577, 172)
+texture = ExtResource("2_qio2b")
+
+[node name="Icon3" type="Sprite2D" parent="."]
+position = Vector2(322, 295)
+texture = ExtResource("2_qio2b")
+
+[node name="Icon4" type="Sprite2D" parent="."]
+position = Vector2(66, 170)
 texture = ExtResource("2_qio2b")

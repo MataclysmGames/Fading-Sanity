@@ -8,7 +8,7 @@ func _ready():
 	reload()
 
 func reload():
-	save_resource = ResourceLoader.load(save_resource_name, "", ResourceLoader.CACHE_MODE_IGNORE) as SaveDataResource
+	save_resource = ResourceLoader.load(save_resource_name, "SaveDataResource", ResourceLoader.CACHE_MODE_IGNORE) as SaveDataResource
 	if not save_resource:
 		save_resource = SaveDataResource.new()
 		save_to_disk()

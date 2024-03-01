@@ -14,15 +14,13 @@ func _ready():
 
 func focus_first_button():
 	if not can_continue():
-		new_game_button.focus_next = settings_button.get_path()
-		new_game_button.focus_neighbor_bottom = settings_button.get_path()
-		settings_button.focus_previous = new_game_button.get_path()
-		settings_button.focus_neighbor_top = new_game_button.get_path()
-		new_game_button.grab_focus()
 		continue_button.set_deferred("disabled", true)
+		new_game_button.focus_previous = new_game_button.get_path()
+		new_game_button.focus_neighbor_top = new_game_button.get_path()
+		new_game_button.grab_focus()
 	else:
 		continue_button.grab_focus()
-	
+
 func on_new_game():
 	SaveData.purge_save_data()
 	SaveData.save_resource.game_start_time = Time.get_unix_time_from_system()

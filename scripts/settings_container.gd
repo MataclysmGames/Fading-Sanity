@@ -35,7 +35,6 @@ func _ready() -> void:
 	update_label(ambient_volume_value, "Ambient", ambient_volume)
 
 func update_label(label : Label, bus_name : String, value : float):
-	print("Setting %s to %.3f" % [bus_name, value])
 	label.text = "%3d" % (value * 100)
 	var master_bus_index = AudioServer.get_bus_index(bus_name)
 	if master_bus_index != -1:

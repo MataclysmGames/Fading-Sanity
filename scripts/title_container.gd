@@ -23,7 +23,7 @@ func focus_first_button():
 
 func on_new_game():
 	SaveData.purge_save_data()
-	SaveData.save_resource.game_start_time = Time.get_unix_time_from_system()
+	SaveData.start_new()
 	BackgroundAudio.play_bell()
 	SceneLoader.fade_in_scene("res://scenes/level_1.tscn", 4.4, 1.0)
 	print("New game")

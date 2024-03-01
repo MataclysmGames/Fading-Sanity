@@ -17,7 +17,9 @@ func save_to_disk():
 	ResourceSaver.save(save_resource, save_resource_name)
 
 func purge_save_data():
-	save_resource = SaveDataResource.new()
+	var new_save_resource = SaveDataResource.new()
+	new_save_resource.audio_bus_volumes = save_resource.audio_bus_volumes
+	save_resource = new_save_resource
 	save_to_disk()
 
 func has_save() -> bool:
@@ -30,4 +32,9 @@ func get_volume(bus_name : String) -> float:
 
 func set_volume(bus_name : String, value : float):
 	save_resource.audio_bus_volumes[bus_name] = value
+	save_to_disk()
+
+func start_new():
+	purge_save_data()
+	save_resource.game_start_time = Time.get_unix_time_from_system() * 1000
 	save_to_disk()

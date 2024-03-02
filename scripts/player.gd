@@ -15,12 +15,8 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 # Player state
 var is_alive : bool = true
 var can_handle_user_input : bool = true
-var death_position : Vector2
-var death_timer_is_created : bool = false
-var reload_position : Vector2
 var frames_since_grounded = 0
 var has_jumped : bool = false
-var is_perma_disabled : bool = false
 
 # Camera target
 var target_list_size = 60
@@ -43,17 +39,12 @@ func _input(event: InputEvent) -> void:
 		SceneLoader.fade_in_scene("res://scenes/title.tscn")
 
 func handle_camera_target():
-	# Update list of last n velocity values
 	last_velocity_x_list[target_index] = velocity.x
 	target_index += 1
 	target_index = target_index % target_list_size
-	
-	# Calculate avg velocity based on last 60 frames
-	# Yes I could keep a running total, allowing just one subtraction, one additon, and one division
-	# But I really can't be bothered
+
 	var avg_velocity_x = avg(last_velocity_x_list)
 
-	# Determine how much to lead the camera
 	var x_lead = avg_velocity_x / 4
 	if x_lead > camera_target.position.x:
 		camera_target.position.x = move_toward(camera_target.position.x, x_lead, 0.5)
@@ -63,28 +54,26 @@ func handle_camera_target():
 		camera_target.position.y = move_toward(camera_target.position.y, look_up_down_direction * 50, 1.5)
 
 func handle_vertical_movement(delta):
-	if is_perma_disabled:
-		# Let the script controlling the player decide what their velocity should be
-		return
-		
 	if is_on_floor():
+		if has_jumped:
+			update_animation("land")
 		has_jumped = false
 		frames_since_grounded = 0
 	else:
 		frames_since_grounded += 1
-		# Add the gravity.
 		var fall_factor = 0.4 if Input.is_action_pressed("jump") else 0.6
 		velocity.y += gravity * fall_factor * delta
 		velocity.y = min(velocity.y, MAX_FALL_SPEED)
 		
-		if velocity.y > 0 and sprite.animation != "fall":
-			sprite.animation = "fall"
+		if velocity.y > 0:
+			#update_animation("fall")
+			pass
 
-	# Handle jump.
 	if Input.is_action_just_pressed("jump"):
 		if is_on_floor() or is_on_wall() or (not has_jumped and frames_since_grounded < COYOTE_FRAMES):
 			velocity.y = JUMP_VELOCITY
 			has_jumped = true
+			update_animation("jump", true)
 
 func handle_horizontal_movement(_delta):
 	var direction = Input.get_axis("left", "right")
@@ -97,14 +86,23 @@ func handle_horizontal_movement(_delta):
 	
 	if is_on_floor():
 		if velocity.x != 0:
-			sprite.animation = "run"
+			if abs(velocity.x) > SPEED / 2:
+				update_animation("run")
+			else:
+				update_animation("walk")
 		else:
-			sprite.animation = "idle"
+			update_animation("idle")
 
 	if velocity.x < 0:
 		sprite.flip_h = true
 	elif velocity.x > 0:
 		sprite.flip_h = false
+
+func update_animation(animation_name : String, force_restart : bool = false):
+	if force_restart or sprite.animation != animation_name:
+		sprite.animation = animation_name
+		if not sprite.is_playing():
+			sprite.play()
 
 func avg(list : Array[float]) -> float:
 	var total = 0.0

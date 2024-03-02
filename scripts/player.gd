@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 const SPEED = 150.0
 const JUMP_VELOCITY = -250.0
-const MAX_FALL_SPEED = 200
+const MAX_FALL_SPEED = 400
 const COYOTE_FRAMES = 5
 
 @onready var camera : Camera2D = $Camera2D
@@ -55,7 +55,8 @@ func handle_camera_target():
 
 	# Determine how much to lead the camera
 	var x_lead = avg_velocity_x / 4
-	camera_target.position.x = move_toward(camera_target.position.x, x_lead, 0.5)
+	if x_lead > camera_target.position.x:
+		camera_target.position.x = move_toward(camera_target.position.x, x_lead, 0.5)
 
 	if is_on_floor():
 		var look_up_down_direction = Input.get_axis("up", "down")
@@ -77,7 +78,7 @@ func handle_vertical_movement(delta):
 		velocity.y = min(velocity.y, MAX_FALL_SPEED)
 		
 		if velocity.y > 0 and sprite.animation != "fall":
-			sprite.animation = "default"
+			sprite.animation = "fall"
 
 	# Handle jump.
 	if Input.is_action_just_pressed("jump"):
@@ -96,9 +97,9 @@ func handle_horizontal_movement(_delta):
 	
 	if is_on_floor():
 		if velocity.x != 0:
-			sprite.animation = "default"
+			sprite.animation = "run"
 		else:
-			sprite.animation = "default"
+			sprite.animation = "idle"
 
 	if velocity.x < 0:
 		sprite.flip_h = true

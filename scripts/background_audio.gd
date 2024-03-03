@@ -1,6 +1,6 @@
 extends Node2D
 
-const reduced_volume_db : float = -22.5
+const reduced_volume_db : float = -17.5
 
 @onready var audio_stream_player : AudioStreamPlayer = $AudioStreamPlayer
 

@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://bp211kt1oio2s"]
+
+[ext_resource type="Texture2D" uid="uid://cde384fbev3s0" path="res://assets/background.png" id="1_imv07"]
+[ext_resource type="Material" uid="uid://baw30n32cwwhr" path="res://resources/fog.tres" id="2_1cd48"]
+
+[node name="ParallaxBackground" type="ParallaxBackground"]
+layer = -1
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="."]
+z_index = -4
+motion_scale = Vector2(0, 0)
+
+[node name="Background" type="Sprite2D" parent="ParallaxLayer"]
+texture = ExtResource("1_imv07")
+offset = Vector2(320, 180)
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="."]
+z_index = -2
+motion_mirroring = Vector2(640, 360)
+
+[node name="Fog" type="ColorRect" parent="ParallaxLayer2"]
+material = ExtResource("2_1cd48")
+custom_minimum_size = Vector2(640, 360)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 640.0
+offset_bottom = 360.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.701961, 0.701961, 0.701961, 1)

@@ -1,61 +1,58 @@
+class_name Player
 extends CharacterBody2D
 
-const SPEED = 150.0
-const JUMP_VELOCITY = -250.0
-const MAX_FALL_SPEED = 400
-const COYOTE_FRAMES = 5
+const SPEED : float = 150.0
+const JUMP_VELOCITY : float = -250.0
+const MAX_FALL_SPEED : float = 400.0
+const COYOTE_FRAMES : float = 5
+
+const one_shot_animations : Array[String] = ["disintegrate", "jump", "land", "death"]
 
 @onready var camera : Camera2D = $Camera2D
 @onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
 @onready var camera_target : RemoteTransform2D = $CameraTarget
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+var gravity : float = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 # Player state
 var is_alive : bool = true
 var can_handle_user_input : bool = true
 var frames_since_grounded = 0
 var has_jumped : bool = false
+var on_ground : bool = true
 
 # Camera target
-var target_list_size = 60
-var target_index = 0
+var target_list_size : int = 60
+var target_index : int = 0
 var last_velocity_x_list : Array[float]
+var last_velocity_sum : float = 0.0
+
+# Animation State
+var one_shot_animation_playing : bool = false
 
 func _ready() -> void:
 	last_velocity_x_list.resize(target_list_size)
+	sprite.animation_finished.connect(on_animation_finished)
+	var load_position : Vector2 = PlayerLoadInfo.consume_load_position()
+	if load_position:
+		position = load_position
 
 func _physics_process(delta):
 	if is_alive and can_handle_user_input:
-		handle_horizontal_movement(delta)
 		handle_vertical_movement(delta)
+		handle_horizontal_movement(delta)
 		move_and_slide()
 		handle_camera_target()
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("escape"):
 		BackgroundAudio.play_bell()
-		SceneLoader.fade_in_scene("res://scenes/title.tscn")
-
-func handle_camera_target():
-	last_velocity_x_list[target_index] = velocity.x
-	target_index += 1
-	target_index = target_index % target_list_size
-
-	var avg_velocity_x = avg(last_velocity_x_list)
-
-	var x_lead = avg_velocity_x / 4
-	if x_lead > camera_target.position.x:
-		camera_target.position.x = move_toward(camera_target.position.x, x_lead, 0.5)
-
-	if is_on_floor():
-		var look_up_down_direction = Input.get_axis("up", "down")
-		camera_target.position.y = move_toward(camera_target.position.y, look_up_down_direction * 50, 1.5)
+		SceneLoader.fade_in_scene("res://scenes/title.tscn", 4.4)
 
 func handle_vertical_movement(delta):
 	if is_on_floor():
-		if has_jumped:
+		if sprite.animation == "fall":
 			update_animation("land")
 		has_jumped = false
 		frames_since_grounded = 0
@@ -66,8 +63,7 @@ func handle_vertical_movement(delta):
 		velocity.y = min(velocity.y, MAX_FALL_SPEED)
 		
 		if velocity.y > 0:
-			#update_animation("fall")
-			pass
+			update_animation("fall")
 
 	if Input.is_action_just_pressed("jump"):
 		if is_on_floor() or is_on_wall() or (not has_jumped and frames_since_grounded < COYOTE_FRAMES):
@@ -98,11 +94,47 @@ func handle_horizontal_movement(_delta):
 	elif velocity.x > 0:
 		sprite.flip_h = false
 
-func update_animation(animation_name : String, force_restart : bool = false):
-	if force_restart or sprite.animation != animation_name:
-		sprite.animation = animation_name
-		if not sprite.is_playing():
-			sprite.play()
+func update_animation(animation_name : String, force_restart : bool = false, play_backwards : bool = false):
+	if force_restart or sprite.animation != animation_name and not one_shot_animation_playing:
+		print(animation_name)
+		if play_backwards:
+			sprite.play_backwards(animation_name)
+		else:
+			sprite.play(animation_name)
+		if sprite.animation in one_shot_animations:
+			one_shot_animation_playing = true
+
+func on_animation_finished():
+	if sprite.animation in one_shot_animations:
+		one_shot_animation_playing = false
+	if sprite.animation == "death" and is_alive:
+		can_handle_user_input = true
+
+func death():
+	update_animation("death", true)
+	is_alive = false
+	
+func reverse_death():
+	update_animation("death", true, true)
+	can_handle_user_input = false
+
+func handle_camera_target():
+	var curr_velocity_x : float = velocity.x
+	last_velocity_sum -= last_velocity_x_list[target_index]
+	last_velocity_sum += curr_velocity_x
+	last_velocity_x_list[target_index] = curr_velocity_x
+	target_index += 1
+	target_index = target_index % target_list_size
+
+	var avg_velocity_x : float = last_velocity_sum / target_list_size
+
+	var x_lead : float = avg_velocity_x / 3
+	if camera_target.position.x * x_lead < 0 or (camera_target.position.x * x_lead >= 0 and abs(x_lead) > abs(camera_target.position.x)):
+		camera_target.position.x = move_toward(camera_target.position.x, x_lead, 0.5)
+
+	if is_on_floor():
+		var look_up_down_direction = Input.get_axis("up", "down")
+		camera_target.position.y = move_toward(camera_target.position.y, look_up_down_direction * 50, 1.5)
 
 func avg(list : Array[float]) -> float:
 	var total = 0.0

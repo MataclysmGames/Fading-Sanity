@@ -22,16 +22,17 @@ func focus_first_button():
 		continue_button.grab_focus()
 
 func on_new_game():
+	new_game_button.release_focus()
 	SaveData.purge_save_data()
 	SaveData.start_new()
 	BackgroundAudio.play_bell()
+	PlayerLoadInfo.load_animation = "death"
 	SceneLoader.fade_in_scene("res://scenes/level_1.tscn", 4.4, 1.0)
-	print("New game")
 
 func on_continue():
+	continue_button.release_focus()
 	BackgroundAudio.play_bell()
-	SceneLoader.fade_in_scene("res://scenes/level_1.tscn", 4.4, 1.0)
-	print("Continue")
+	SceneLoader.fade_in_scene("res://scenes/level_2.tscn", 4.4, 1.0)
 
 func on_exit():
 	get_tree().quit()

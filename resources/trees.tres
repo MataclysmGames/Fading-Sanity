@@ -1,0 +1,28 @@
+[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://b22rganwta1wd"]
+
+[ext_resource type="Shader" path="res://resources/trees_shader.gdshader" id="1_mv8sa"]
+
+[sub_resource type="Gradient" id="Gradient_fbuai"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.552972, 0.627907, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_67jeq"]
+noise_type = 0
+seed = 327
+fractal_type = 2
+fractal_lacunarity = 0.01
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_1667i"]
+width = 640
+height = 360
+seamless = true
+seamless_blend_skirt = 0.75
+color_ramp = SubResource("Gradient_fbuai")
+noise = SubResource("FastNoiseLite_67jeq")
+
+[resource]
+shader = ExtResource("1_mv8sa")
+shader_parameter/density = 0.85
+shader_parameter/speed = Vector2(0, 0)
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_1667i")

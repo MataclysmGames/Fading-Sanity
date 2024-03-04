@@ -34,9 +34,9 @@ func _physics_process(delta: float) -> void:
 func on_body_detected(body : Node2D):
 	if body is Player:
 		target = (body as Player)
-		print("Detected")
+		#print("Detected")
 
 func on_body_undetected(body : Node2D):
 	if body is Player:
 		target = null
-		print("Undetected")
+		#print("Undetected")

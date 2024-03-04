@@ -35,9 +35,7 @@ layer_1/tile_data = PackedInt32Array(327692, 262145, 1, 458776, 262145, 1, 45878
 layer_2/tile_data = PackedInt32Array(393228, 262145, 0, 393225, 262145, 0, 458766, 327681, 0, 524306, 262145, 0, 524307, 262145, 0, 524305, 327681, 0, 393222, 262145, 0, 393219, 262145, 0, 393218, 327681, 0)
 
 [node name="MoodLighting" type="DirectionalLight2D" parent="."]
-visible = false
 color = Color(0, 0, 0, 1)
-energy = 0.9
 blend_mode = 2
 
 [node name="ParallaxBackground" parent="." instance=ExtResource("3_cg73g")]

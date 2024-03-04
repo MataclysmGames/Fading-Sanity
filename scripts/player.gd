@@ -1,12 +1,17 @@
 class_name Player
 extends CharacterBody2D
 
-const SPEED : float = 150.0
+const SPEED : float = 160.0
 const JUMP_VELOCITY : float = -250.0
 const MAX_FALL_SPEED : float = 400.0
 const COYOTE_FRAMES : float = 5
 
 const one_shot_animations : Array[String] = ["disintegrate", "jump", "land", "death"]
+
+@export var camera_limit_top : int = -2560
+@export var camera_limit_left : int = -2560
+@export var camera_limit_right : int = 2560
+@export var camera_limit_bottom : int = 2560
 
 @onready var camera : Camera2D = $Camera2D
 @onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
@@ -34,14 +39,21 @@ var one_shot_animation_playing : bool = false
 func _ready() -> void:
 	last_velocity_x_list.resize(target_list_size)
 	sprite.animation_finished.connect(on_animation_finished)
+	
 	var load_position : Vector2 = PlayerLoadInfo.consume_load_position()
 	if load_position:
 		position = load_position
+	
+	camera.limit_top = camera_limit_top
+	camera.limit_left = camera_limit_left
+	camera.limit_right = camera_limit_right
+	camera.limit_bottom = camera_limit_bottom
 
 func _physics_process(delta):
+	handle_gravity(delta)
 	if is_alive and can_handle_user_input:
-		handle_vertical_movement(delta)
-		handle_horizontal_movement(delta)
+		handle_jump()
+		handle_horizontal_movement()
 		move_and_slide()
 		handle_camera_target()
 
@@ -49,8 +61,8 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("escape"):
 		BackgroundAudio.play_bell()
 		SceneLoader.fade_in_scene("res://scenes/title.tscn", 4.4)
-
-func handle_vertical_movement(delta):
+		
+func handle_gravity(delta : float):
 	if is_on_floor():
 		if sprite.animation == "fall":
 			update_animation("land")
@@ -58,20 +70,23 @@ func handle_vertical_movement(delta):
 		frames_since_grounded = 0
 	else:
 		frames_since_grounded += 1
-		var fall_factor = 0.4 if Input.is_action_pressed("jump") else 0.6
+		var fall_factor = 0.6 if Input.is_action_pressed("jump") else 1.2
+		if velocity.y < 0: # going up
+			fall_factor *= 0.75
 		velocity.y += gravity * fall_factor * delta
 		velocity.y = min(velocity.y, MAX_FALL_SPEED)
 		
 		if velocity.y > 0:
 			update_animation("fall")
 
+func handle_jump():
 	if Input.is_action_just_pressed("jump"):
 		if is_on_floor() or is_on_wall() or (not has_jumped and frames_since_grounded < COYOTE_FRAMES):
 			velocity.y = JUMP_VELOCITY
 			has_jumped = true
 			update_animation("jump", true)
 
-func handle_horizontal_movement(_delta):
+func handle_horizontal_movement():
 	var direction = Input.get_axis("left", "right")
 	if direction:
 		velocity.x = move_toward(velocity.x, direction * SPEED, SPEED / 4)
@@ -96,7 +111,7 @@ func handle_horizontal_movement(_delta):
 
 func update_animation(animation_name : String, force_restart : bool = false, play_backwards : bool = false):
 	if force_restart or sprite.animation != animation_name and not one_shot_animation_playing:
-		print(animation_name)
+		#print(animation_name)
 		if play_backwards:
 			sprite.play_backwards(animation_name)
 		else:

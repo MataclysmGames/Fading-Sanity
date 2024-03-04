@@ -10,10 +10,10 @@ var initial_position_set : bool = false
 
 func _process(delta):
 	register_initial_position()
-	if is_hovered() and not hover_effect_active and not disabled:
+	if is_hovered():
 		grab_focus()
 	
-	if has_focus() and not hover_effect_active and not disabled:
+	if has_focus() and not hover_effect_active:
 		hover_effect_active = true
 		create_tween().tween_property(self, "position", initial_position + Vector2(hover_offset, 0), button_tween_duration).set_trans(Tween.TRANS_EXPO)
 	elif not has_focus() and hover_effect_active:

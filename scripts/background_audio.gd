@@ -1,41 +1,56 @@
 extends Node2D
 
-const reduced_volume_db : float = -17.5
+const reduced_volume_db : float = -20.0
 
-@onready var audio_stream_player : AudioStreamPlayer = $AudioStreamPlayer
+@onready var music_player : AudioStreamPlayer = $MusicPlayer
+@onready var ambience_player : AudioStreamPlayer = $AmbiencePlayer
+@onready var sfx_player : AudioStreamPlayer = $SFXPlayer
 
 var main_theme : AudioStream = load("res://external_assets/100870__xythe__loop.wav")
+var forest_music : AudioStream = load("res://external_assets/331873__furbyguy__pno-loop.wav")
 var bell : AudioStream = load("res://external_assets/76405__dsp9000__old-church-bell.wav")
-var current_audio_resource = "none"
 
 func _ready():
 	pass
 
 func play_main_theme(pitch : float = 1.0):
-	play_audio(main_theme, reduced_volume_db, pitch, 0.25)
+	play_audio(music_player, main_theme, reduced_volume_db, pitch, 0.25)
+
+func play_forest_music(pitch : float = 1.0, transition_duration : float = 1.0):
+	play_music(forest_music, reduced_volume_db, pitch, transition_duration)
 	
 func play_bell():
-	play_audio(bell, reduced_volume_db, 1.0, 0.0)
+	play_audio(music_player, bell, reduced_volume_db, 1.0, 0.0)
+	
+func play_music(audio : AudioStream, volume : float = reduced_volume_db, pitch : float = 1.0, transition_duration : float = 1.0):
+	play_audio(music_player, audio, volume, pitch, transition_duration)
+	
+func stop_music(transition_duration : float = 1.0):
+	stop_audio(music_player, transition_duration)
+	
+func play_ambience(audio : AudioStream, volume : float = reduced_volume_db, pitch : float = 1.0, transition_duration : float = 1.0):
+	play_audio(ambience_player, audio, volume, pitch, transition_duration)
+	
+func stop_ambience(transition_duration : float = 1.0):
+	stop_audio(ambience_player, transition_duration)
 
-func play_audio(audio : AudioStream, volume : float = reduced_volume_db, pitch : float = 1.0, transition_duration : float = 2.0):
+func play_audio(player : AudioStreamPlayer, audio : AudioStream, volume : float = reduced_volume_db, pitch : float = 1.0, transition_duration : float = 1.0):
 	if not audio:
 		return
-	if audio.resource_path == current_audio_resource and audio.loop_mode == AudioStreamWAV.LOOP_FORWARD:
-		audio_stream_player.create_tween().tween_property(audio_stream_player, "volume_db", volume, transition_duration)
-		audio_stream_player.create_tween().tween_property(audio_stream_player, "pitch_scale", pitch, transition_duration)
+	if player.stream and audio.resource_path == player.stream.resource_path and audio.loop_mode == AudioStreamWAV.LOOP_FORWARD:
+		player.create_tween().tween_property(player, "volume_db", volume, transition_duration)
+		player.create_tween().tween_property(player, "pitch_scale", pitch, transition_duration)
 	else:
-		current_audio_resource = audio.resource_path
-		var tween = audio_stream_player.create_tween()
-		if audio_stream_player.playing:
-			tween.tween_property(audio_stream_player, "volume_db", -100, transition_duration)
-		tween.tween_callback(func(): audio_stream_player.stream = audio)
-		tween.tween_callback(func(): audio_stream_player.volume_db = -30)
-		tween.tween_callback(func(): audio_stream_player.pitch_scale = pitch)
-		tween.tween_callback(audio_stream_player.play)
-		tween.tween_property(audio_stream_player, "volume_db", volume, transition_duration)
+		var tween = player.create_tween()
+		if player.playing:
+			tween.tween_property(player, "volume_db", -100, transition_duration)
+		tween.tween_callback(func(): player.stream = audio)
+		tween.tween_callback(func(): player.volume_db = -30)
+		tween.tween_callback(func(): player.pitch_scale = pitch)
+		tween.tween_callback(player.play)
+		tween.tween_property(player, "volume_db", volume, transition_duration)
 		
-func stop_audio(fade_duration : float = 1.0):
-	current_audio_resource = "none"
-	var tween = audio_stream_player.create_tween()
-	tween.tween_property(audio_stream_player, "volume_db", -100, fade_duration)
-	tween.tween_callback(audio_stream_player.stop)
+func stop_audio(player : AudioStreamPlayer, transition_duration : float = 1.0):
+	var tween = player.create_tween()
+	tween.tween_property(player, "volume_db", -100, transition_duration)
+	tween.tween_callback(player.stop)

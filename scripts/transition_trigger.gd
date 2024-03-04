@@ -14,7 +14,7 @@ func _ready() -> void:
 func on_body_entered(body : Node2D):
 	if body is Player and not triggered:
 		triggered = true
-		SceneLoader.fade_in_scene(scene_to_load)
+		SceneLoader.fade_in_scene(scene_to_load, 0.5, 0.5)
 		(body as Player).can_handle_user_input = false
 		PlayerLoadInfo.load_position = player_load_position
 		PlayerLoadInfo.load_animation = player_load_animation

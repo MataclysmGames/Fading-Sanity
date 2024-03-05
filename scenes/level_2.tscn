@@ -34,10 +34,6 @@ layer_0/tile_data = PackedInt32Array(655379, 196609, 2, 589843, 65537, 6, 655378
 layer_1/tile_data = PackedInt32Array(327692, 262145, 1, 458776, 262145, 1, 458782, 262145, 1)
 layer_2/tile_data = PackedInt32Array(393228, 262145, 0, 393225, 262145, 0, 458766, 327681, 0, 524306, 262145, 0, 524307, 262145, 0, 524305, 327681, 0, 393222, 262145, 0, 393219, 262145, 0, 393218, 327681, 0)
 
-[node name="MoodLighting" type="DirectionalLight2D" parent="."]
-color = Color(0, 0, 0, 1)
-blend_mode = 2
-
 [node name="ParallaxBackground" parent="." instance=ExtResource("3_cg73g")]
 
 [node name="Transition Trigger" parent="." instance=ExtResource("3_o263h")]
@@ -49,7 +45,7 @@ player_load_position = Vector2(1762, 433)
 [node name="Transition Trigger2" parent="." instance=ExtResource("3_o263h")]
 position = Vector2(992, 544)
 scale = Vector2(4, 1)
-scene_to_load = "res://scenes/level_2.tscn"
+scene_to_load = "res://scenes/level_3.tscn"
 
 [node name="Transition Trigger3" parent="." instance=ExtResource("3_o263h")]
 position = Vector2(1344, -96)

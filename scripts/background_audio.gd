@@ -9,6 +9,7 @@ const reduced_volume_db : float = -20.0
 var main_theme : AudioStream = load("res://external_assets/100870__xythe__loop.wav")
 var forest_music : AudioStream = load("res://external_assets/331873__furbyguy__pno-loop.wav")
 var bell : AudioStream = load("res://external_assets/76405__dsp9000__old-church-bell.wav")
+var ambience : AudioStream = load("res://external_assets/405134__mjeno__autumn-forest-leaves-falling-close-to-pond-ii-loopable.wav")
 
 func _ready():
 	pass
@@ -28,8 +29,8 @@ func play_music(audio : AudioStream, volume : float = reduced_volume_db, pitch :
 func stop_music(transition_duration : float = 1.0):
 	stop_audio(music_player, transition_duration)
 	
-func play_ambience(audio : AudioStream, volume : float = reduced_volume_db, pitch : float = 1.0, transition_duration : float = 1.0):
-	play_audio(ambience_player, audio, volume, pitch, transition_duration)
+func play_forest_ambience(volume : float = reduced_volume_db, pitch : float = 1.0, transition_duration : float = 1.0):
+	play_audio(ambience_player, ambience, volume, pitch, transition_duration)
 	
 func stop_ambience(transition_duration : float = 1.0):
 	stop_audio(ambience_player, transition_duration)

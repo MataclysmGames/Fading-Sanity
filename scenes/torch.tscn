@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://c07w3rth8ynm2"]
+
+[ext_resource type="Script" path="res://scripts/torch.gd" id="1_heokt"]
+[ext_resource type="Texture2D" uid="uid://dmrlsp5alopqa" path="res://assets/fading-sanity.png" id="1_mo1vn"]
+
+[sub_resource type="Gradient" id="Gradient_wxi4o"]
+offsets = PackedFloat32Array(0, 0.0668258, 0.116945, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 0, 0, 1, 0.831373, 0.682353, 0, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_olomp"]
+gradient = SubResource("Gradient_wxi4o")
+width = 256
+height = 256
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[node name="Torch" type="Node2D"]
+light_mask = 0
+script = ExtResource("1_heokt")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(0, -3)
+blend_mode = 2
+shadow_item_cull_mask = 5
+texture = SubResource("GradientTexture2D_olomp")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_mo1vn")
+hframes = 8
+vframes = 8
+frame = 13

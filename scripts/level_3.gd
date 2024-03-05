@@ -6,6 +6,6 @@ extends Node2D
 func _ready() -> void:
 	MoodLighting.show()
 	BackgroundAudio.play_forest_ambience()
-	BackgroundAudio.play_forest_music(0.7, 2.0)
+	BackgroundAudio.play_forest_music(0.85, 2.0)
 	if PlayerLoadInfo.load_animation == "death":
 		player.reverse_death()

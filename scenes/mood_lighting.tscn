@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://8rg5jp4n2vyf"]
+
+[ext_resource type="Script" path="res://scripts/mood_lighting.gd" id="1_ri5s6"]
+
+[node name="MoodLighting" type="DirectionalLight2D"]
+visible = false
+color = Color(0, 0, 0, 1)
+energy = 0.99
+blend_mode = 2
+script = ExtResource("1_ri5s6")

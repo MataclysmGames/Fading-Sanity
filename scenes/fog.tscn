@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=3 uid="uid://du3crnwi3vs65"]
+
+[ext_resource type="Script" path="res://scripts/fog.gd" id="1_tsc6e"]
+[ext_resource type="Texture2D" uid="uid://b2coofgx0kmjo" path="res://assets/fog.png" id="2_x3c6e"]
+
+[sub_resource type="Gradient" id="Gradient_oa7b0"]
+colors = PackedColorArray(1, 1, 1, 0.705882, 0.619608, 0.619608, 0.619608, 0.588235)
+
+[node name="Fog" type="Node2D"]
+light_mask = 16
+position = Vector2(32, 32)
+script = ExtResource("1_tsc6e")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+amount = 1024
+lifetime = 60.0
+preprocess = 60.0
+texture = ExtResource("2_x3c6e")
+emission_shape = 3
+emission_rect_extents = Vector2(10, 600)
+direction = Vector2(-1, 0)
+spread = 10.0
+gravity = Vector2(-1, 0)
+initial_velocity_min = 40.0
+initial_velocity_max = 60.0
+angle_min = -180.8
+angle_max = 168.3
+scale_amount_min = 0.02
+scale_amount_max = 0.04
+color_ramp = SubResource("Gradient_oa7b0")
+hue_variation_min = -0.32
+hue_variation_max = 0.27

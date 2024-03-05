@@ -10,7 +10,6 @@ extends CharacterBody2D
 var gravity: int = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 var target : Player
-var wander_target : Vector2
 var initial_position : Vector2
 
 func _ready() -> void:
@@ -25,11 +24,30 @@ func _ready() -> void:
 	detection_area.add_child(collision_shape)
 
 func _physics_process(delta: float) -> void:
+	if target:
+		on_target_process(target)
+	else:
+		on_no_target_process(initial_position)
+		
 	if respects_gravity and not is_on_floor():
+		if velocity.y < 0:
+			velocity.y = 0
 		velocity.y += gravity * delta
-	var active_target : Vector2 = target.global_position if target else initial_position
-	velocity = (active_target - global_position).normalized() * speed
 	move_and_slide()
+
+func on_target_process(target : Player):
+	var direction = (target.global_position - global_position).normalized() * speed
+	if respects_gravity:
+		velocity.x = direction.x
+	else:
+		velocity = direction
+		
+func on_no_target_process(initial_position : Vector2):
+	var direction = (initial_position - global_position).normalized() * speed / 2.0
+	if respects_gravity:
+		velocity.x = direction.x
+	else:
+		velocity = direction
 
 func on_body_detected(body : Node2D):
 	if body is Player:

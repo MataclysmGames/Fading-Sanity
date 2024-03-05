@@ -59,6 +59,8 @@ func _physics_process(delta):
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("escape"):
+		update_animation("disintegrate", true)
+		can_handle_user_input = false
 		BackgroundAudio.play_bell()
 		SceneLoader.fade_in_scene("res://scenes/title.tscn", 4.4)
 		

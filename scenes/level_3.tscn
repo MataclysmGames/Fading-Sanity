@@ -1,18 +1,21 @@
-[gd_scene load_steps=6 format=3 uid="uid://be2sm4bfvshws"]
+[gd_scene load_steps=8 format=3 uid="uid://be2sm4bfvshws"]
 
 [ext_resource type="PackedScene" uid="uid://ka75h4icbjdj" path="res://scenes/player.tscn" id="1_hja32"]
 [ext_resource type="Script" path="res://scripts/level_3.gd" id="1_vvdut"]
 [ext_resource type="PackedScene" uid="uid://c2p50o0pjpdy5" path="res://scenes/tile_map.tscn" id="2_6m6ey"]
 [ext_resource type="PackedScene" uid="uid://bp211kt1oio2s" path="res://scenes/parallax_background.tscn" id="3_nml3n"]
 [ext_resource type="PackedScene" uid="uid://c07w3rth8ynm2" path="res://scenes/torch.tscn" id="5_gimi7"]
+[ext_resource type="PackedScene" uid="uid://c82y4n4ckqm3" path="res://scenes/rat.tscn" id="6_e261p"]
+[ext_resource type="PackedScene" uid="uid://c1yjwwfke3qgd" path="res://scenes/slime.tscn" id="7_aqi8x"]
 
 [node name="Level 3" type="Node2D"]
 script = ExtResource("1_vvdut")
 
 [node name="Player" parent="." instance=ExtResource("1_hja32")]
-position = Vector2(80, -7)
+position = Vector2(81, -6)
 camera_limit_top = 0
 camera_limit_left = -32
+camera_limit_right = 1632
 camera_limit_bottom = 384
 
 [node name="TileMap" parent="." instance=ExtResource("2_6m6ey")]
@@ -29,3 +32,12 @@ position = Vector2(160, 224)
 
 [node name="Torch2" parent="." instance=ExtResource("5_gimi7")]
 position = Vector2(303, 122)
+
+[node name="Rat" parent="." instance=ExtResource("6_e261p")]
+position = Vector2(851, 299)
+
+[node name="Slime" parent="." instance=ExtResource("7_aqi8x")]
+position = Vector2(1049, 294)
+
+[node name="Slime2" parent="." instance=ExtResource("7_aqi8x")]
+position = Vector2(1106, 293)

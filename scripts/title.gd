@@ -6,6 +6,7 @@ const tween_duration : float = 0.4
 @onready var settings_container: SettingsContainer = $SettingsContainer
 
 func _ready():
+	MoodLighting.hide()
 	BackgroundAudio.stop_music(0.0)
 	BackgroundAudio.play_main_theme(0.4)
 	title_container.settings_button.pressed.connect(on_settings_pressed)

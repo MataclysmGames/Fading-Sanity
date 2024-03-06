@@ -35,14 +35,10 @@ position = Vector2(303, 122)
 
 [node name="Rat" parent="." instance=ExtResource("6_e261p")]
 position = Vector2(244, 293)
-stun_duration = 0.3
 
 [node name="Slime" parent="." instance=ExtResource("7_aqi8x")]
 position = Vector2(1049, 294)
-stun_duration = 0.2
 
 [node name="Slime2" parent="." instance=ExtResource("7_aqi8x")]
 position = Vector2(1384, 292)
-health = 1000.0
-stun_duration = 0.2
-knockback_strength = 500.0
+health = 200.0

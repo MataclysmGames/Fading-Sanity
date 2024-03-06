@@ -6,8 +6,8 @@ extends CharacterBody2D
 @export var exp_given : float = 1.0
 @export var detection_radius : float = 64
 @export var respects_gravity : bool = true
-@export var stun_duration : float = 0.1
-@export var knockback_strength : float = 300.0
+@export var stun_duration : float = 0.2
+@export var knockback_strength : float = 400.0
 
 @onready var detection_area : Area2D = Area2D.new()
 
@@ -78,14 +78,14 @@ func take_damage(amount : float, knockback_direction : Vector2, player : Player)
 	velocity = knockback_direction * knockback_strength
 	is_stunned = true
 	stun_timer.start(stun_duration)
-	if self.sprite is AnimatedSprite2D:
+	if "sprite" in self and self.sprite is AnimatedSprite2D:
 		(self.sprite as AnimatedSprite2D).modulate = Color(1, 0, 0, 1)
 		var flash_tween : Tween = self.sprite.create_tween()
 		flash_tween.tween_property(self.sprite, "modulate", Color(1, 1, 1, 1), stun_duration)
 	if health <= 0.0:
 		player.give_exp(exp_given)
-		queue_free()
 
 func on_stun_end():
 	is_stunned = false
-	print("Stun end")
+	if health <= 0.0:
+		queue_free()

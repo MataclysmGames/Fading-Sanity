@@ -16,6 +16,8 @@ const one_shot_animations : Array[String] = ["disintegrate", "jump", "land", "de
 @onready var camera : Camera2D = $Camera2D
 @onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
 @onready var camera_target : RemoteTransform2D = $CameraTarget
+@onready var attack_aim : Node2D = $AttackAim
+@onready var hit_box : Area2D = $AttackAim/HitBox
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity : float = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -26,6 +28,10 @@ var can_handle_user_input : bool = true
 var frames_since_grounded = 0
 var has_jumped : bool = false
 var on_ground : bool = true
+
+# Player stats
+var attack_damage : float = 24.9
+var total_exp : float = 0.0
 
 # Camera target
 var target_list_size : int = 60
@@ -52,6 +58,7 @@ func _ready() -> void:
 func _physics_process(delta):
 	handle_gravity(delta)
 	if is_alive and can_handle_user_input:
+		handle_aim()
 		handle_jump()
 		handle_horizontal_movement()
 		move_and_slide()
@@ -63,7 +70,27 @@ func _input(event: InputEvent) -> void:
 		can_handle_user_input = false
 		BackgroundAudio.play_bell()
 		SceneLoader.fade_in_scene("res://scenes/title.tscn", 4.4)
+	if event is InputEventMouseButton:
+		if (event as InputEventMouseButton).pressed:
+			if event.button_index == MOUSE_BUTTON_LEFT:
+				handle_attack()
+			elif event.button_index == MOUSE_BUTTON_RIGHT:
+				pass
 		
+func handle_attack():
+	var hit_something : bool = false
+	for body in hit_box.get_overlapping_bodies():
+		if body is GenericEnemy:
+			hit_something = true
+			var knockback_direction = sprite.global_position.direction_to(body.global_position).normalized()
+			knockback_direction.y = clampf(knockback_direction.y, -0.4, -1.0)
+			(body as GenericEnemy).take_damage(attack_damage, knockback_direction, self)
+	print(hit_something)
+
+func handle_aim():
+	var global_mouse_pos : Vector2 = get_global_mouse_position()
+	attack_aim.rotation = attack_aim.global_position.angle_to_point(global_mouse_pos)
+
 func handle_gravity(delta : float):
 	if is_on_floor():
 		if sprite.animation == "fall":
@@ -158,3 +185,7 @@ func avg(list : Array[float]) -> float:
 	for val in list:
 		total += val
 	return total / len(list)
+
+func give_exp(amount : float):
+	total_exp += amount
+	print("Now have %d exp" % total_exp)

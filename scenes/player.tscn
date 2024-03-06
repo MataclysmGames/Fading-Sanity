@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://ka75h4icbjdj"]
+[gd_scene load_steps=55 format=3 uid="uid://ka75h4icbjdj"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_7jqql"]
 [ext_resource type="Texture2D" uid="uid://chyow3s5gcln0" path="res://assets/character.png" id="2_2mh5u"]
@@ -390,6 +390,12 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.5, 0)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_651e5"]
+size = Vector2(32, 32)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_2hgmb"]
+size = Vector2(4, 4)
+
 [node name="Player" type="CharacterBody2D"]
 z_index = 2
 script = ExtResource("1_7jqql")
@@ -447,3 +453,17 @@ shadow_enabled = true
 shadow_filter = 1
 shadow_filter_smooth = 5.0
 texture = SubResource("GradientTexture2D_nnib4")
+
+[node name="AttackAim" type="Node2D" parent="."]
+position = Vector2(16, 16)
+
+[node name="HitBox" type="Area2D" parent="AttackAim"]
+position = Vector2(22, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackAim/HitBox"]
+shape = SubResource("RectangleShape2D_651e5")
+
+[node name="Sprite2D" type="Sprite2D" parent="AttackAim/HitBox/CollisionShape2D"]
+position = Vector2(-16, 0)
+texture = SubResource("PlaceholderTexture2D_2hgmb")
+offset = Vector2(16, 0)

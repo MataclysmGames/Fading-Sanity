@@ -43,7 +43,7 @@ detection_radius = 128.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_34uu4")
-frame_progress = 0.808106
+frame_progress = 0.0109651
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 energy = 0.4

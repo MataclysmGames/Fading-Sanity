@@ -6,8 +6,8 @@ extends CharacterBody2D
 @export var exp_given : float = 1.0
 @export var detection_radius : float = 64
 @export var respects_gravity : bool = true
-@export var stun_duration : float = 0.2
-@export var knockback_strength : float = 400.0
+@export var stun_duration : float = 0.25
+@export var knockback_strength : float = 200.0
 
 @onready var detection_area : Area2D = Area2D.new()
 
@@ -16,7 +16,8 @@ var gravity: int = ProjectSettings.get_setting("physics/2d/default_gravity")
 var target : Player
 var initial_position : Vector2
 var is_stunned : bool = false
-var stun_timer : Timer
+var stun_timer : Timer = Timer.new()
+var is_alive : bool = true
 
 func _ready() -> void:
 	initial_position = global_position
@@ -29,21 +30,21 @@ func _ready() -> void:
 	detection_area.add_child(collision_shape)
 	add_child(detection_area)
 	
-	stun_timer = Timer.new()
 	stun_timer.one_shot = true
 	stun_timer.timeout.connect(on_stun_end)
 	add_child(stun_timer)
 
-func _physics_process(delta: float) -> void:
-	if not is_stunned:
+func _physics_process(delta: float) -> void:		
+	if not is_stunned and is_alive:
 		if target:
 			on_target_process(target)
 		else:
 			on_no_target_process(initial_position)
-		
+	
+	if not is_alive:
+		velocity.x = 0
+
 	if respects_gravity and not is_on_floor():
-		if velocity.y < 0:
-			velocity.y = 0
 		velocity.y += gravity * delta
 	move_and_slide()
 
@@ -64,12 +65,10 @@ func on_no_target_process(initial_position : Vector2):
 func on_body_detected(body : Node2D):
 	if body is Player:
 		target = (body as Player)
-		#print("Detected")
 
 func on_body_undetected(body : Node2D):
 	if body is Player:
 		target = null
-		#print("Undetected")
 
 func take_damage(amount : float, knockback_direction : Vector2, player : Player):
 	if is_stunned:
@@ -79,13 +78,23 @@ func take_damage(amount : float, knockback_direction : Vector2, player : Player)
 	is_stunned = true
 	stun_timer.start(stun_duration)
 	if "sprite" in self and self.sprite is AnimatedSprite2D:
-		(self.sprite as AnimatedSprite2D).modulate = Color(1, 0, 0, 1)
-		var flash_tween : Tween = self.sprite.create_tween()
-		flash_tween.tween_property(self.sprite, "modulate", Color(1, 1, 1, 1), stun_duration)
+		var animated_sprite : AnimatedSprite2D = (self.sprite as AnimatedSprite2D)
+		animated_sprite.modulate = Color(1, 0, 0, 1)
+		var flash_tween : Tween = animated_sprite.create_tween()
+		flash_tween.tween_property(animated_sprite, "modulate", Color(1, 1, 1, 1), stun_duration)
 	if health <= 0.0:
 		player.give_exp(exp_given)
 
 func on_stun_end():
 	is_stunned = false
-	if health <= 0.0:
-		queue_free()
+	if health <= 0.0 and is_alive:
+		death()
+
+func death():
+	is_alive = false
+	var fade_tween : Tween = create_tween()
+	if "sprite" in self and self.sprite is AnimatedSprite2D:
+		var animated_sprite : AnimatedSprite2D = (self.sprite as AnimatedSprite2D)
+		animated_sprite.modulate = Color(1, 0, 0, 1)
+		fade_tween.tween_property(self, "modulate", Color(1, 1, 1, 0), 0.25)
+	fade_tween.tween_callback(queue_free)

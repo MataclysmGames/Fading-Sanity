@@ -401,6 +401,7 @@ z_index = 2
 script = ExtResource("1_7jqql")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+light_mask = 2
 sprite_frames = SubResource("SpriteFrames_qmpol")
 animation = &"death"
 autoplay = "idle"
@@ -438,12 +439,14 @@ editor_draw_drag_margin = true
 
 [node name="GeneralLight" type="PointLight2D" parent="."]
 energy = 0.3
+range_item_cull_mask = 3
 shadow_filter_smooth = 5.0
 shadow_item_cull_mask = 0
 texture = SubResource("GradientTexture2D_nnib4")
 
 [node name="PreciseLight" type="PointLight2D" parent="."]
 energy = 0.7
+range_item_cull_mask = 3
 shadow_enabled = true
 shadow_filter = 1
 shadow_filter_smooth = 5.0
@@ -458,6 +461,7 @@ position = Vector2(26, 0)
 shape = SubResource("RectangleShape2D_651e5")
 
 [node name="Sprite2D" type="Sprite2D" parent="AttackAim/HitBox/CollisionShape2D"]
-position = Vector2(6, 0)
+visible = false
+position = Vector2(2, -1.19209e-07)
+scale = Vector2(10.5, 7)
 texture = SubResource("PlaceholderTexture2D_2hgmb")
-offset = Vector2(16, 0)

@@ -18,6 +18,7 @@ const one_shot_animations : Array[String] = ["disintegrate", "jump", "land", "de
 @onready var camera_target : RemoteTransform2D = $CameraTarget
 @onready var attack_aim : Node2D = $AttackAim
 @onready var hit_box : Area2D = $AttackAim/HitBox
+@onready var attack_sprite : Sprite2D = $AttackAim/HitBox/CollisionShape2D/Sprite2D
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity : float = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -28,6 +29,7 @@ var can_handle_user_input : bool = true
 var frames_since_grounded = 0
 var has_jumped : bool = false
 var on_ground : bool = true
+var has_been_on_ground : bool = false
 
 # Player stats
 var attack_damage : float = 24.9
@@ -61,8 +63,9 @@ func _physics_process(delta):
 		handle_aim()
 		handle_jump()
 		handle_horizontal_movement()
-		move_and_slide()
 		handle_camera_target()
+	if (is_alive and can_handle_user_input) or not has_been_on_ground:
+		move_and_slide()
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("escape"):
@@ -79,6 +82,10 @@ func _input(event: InputEvent) -> void:
 		
 func handle_attack():
 	var hit_something : bool = false
+	var attack_tween : Tween = create_tween()
+	attack_tween.tween_callback(attack_sprite.show)
+	attack_tween.tween_interval(0.1)
+	attack_tween.tween_callback(attack_sprite.hide)
 	for body in hit_box.get_overlapping_bodies():
 		if body is GenericEnemy:
 			hit_something = true
@@ -93,6 +100,7 @@ func handle_aim():
 
 func handle_gravity(delta : float):
 	if is_on_floor():
+		has_been_on_ground = true
 		if sprite.animation == "fall":
 			update_animation("land")
 		has_jumped = false

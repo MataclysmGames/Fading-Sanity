@@ -6,4 +6,5 @@
 color = Color(0, 0, 0, 1)
 energy = 0.99
 blend_mode = 2
+range_item_cull_mask = 3
 script = ExtResource("1_ri5s6")

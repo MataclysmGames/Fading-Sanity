@@ -1,6 +1,9 @@
-[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://baw30n32cwwhr"]
+[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://baw30n32cwwhr"]
 
 [ext_resource type="Shader" path="res://resources/fog_shader.gdshader" id="1_5xsr7"]
+
+[sub_resource type="Gradient" id="Gradient_0i2yr"]
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_cvp3a"]
 noise_type = 0
@@ -12,6 +15,7 @@ height = 360
 in_3d_space = true
 seamless = true
 seamless_blend_skirt = 0.75
+color_ramp = SubResource("Gradient_0i2yr")
 noise = SubResource("FastNoiseLite_cvp3a")
 
 [resource]

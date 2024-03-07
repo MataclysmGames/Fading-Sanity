@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cdepbgru3f4dn"
+path="res://.godot/imported/church_bell.wav-2c14e7b2a51be0814d19a3a472d4f57d.sample"
+
+[deps]
+
+source_file="res://external_assets/Free Sound/church_bell.wav"
+dest_files=["res://.godot/imported/church_bell.wav-2c14e7b2a51be0814d19a3a472d4f57d.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

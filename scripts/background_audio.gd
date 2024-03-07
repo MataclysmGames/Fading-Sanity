@@ -6,10 +6,10 @@ const reduced_volume_db : float = -20.0
 @onready var ambience_player : AudioStreamPlayer = $AmbiencePlayer
 @onready var sfx_player : AudioStreamPlayer = $SFXPlayer
 
-var main_theme : AudioStream = load("res://external_assets/100870__xythe__loop.wav")
-var forest_music : AudioStream = load("res://external_assets/331873__furbyguy__pno-loop.wav")
-var bell : AudioStream = load("res://external_assets/76405__dsp9000__old-church-bell.wav")
-var ambience : AudioStream = load("res://external_assets/405134__mjeno__autumn-forest-leaves-falling-close-to-pond-ii-loopable.wav")
+var main_theme : AudioStream = load("res://external_assets/Free Sound/xythe_loop.wav")
+var forest_music : AudioStream = load("res://external_assets/Free Sound/furbyguy_pno.wav")
+var bell : AudioStream = load("res://external_assets/Free Sound/church_bell.wav")
+var ambience : AudioStream = load("res://external_assets/Free Sound/forest-leaves_loop.wav")
 
 func _ready():
 	pass

@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://c80w2htwd327w"]
+
+[ext_resource type="Script" path="res://scripts/old_man.gd" id="1_aly8s"]
+[ext_resource type="Texture2D" uid="uid://do5u46nawvlbp" path="res://assets/old-man.png" id="2_eqkta"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_14nd4"]
+atlas = ExtResource("2_eqkta")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6awba"]
+atlas = ExtResource("2_eqkta")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_otnek"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_14nd4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6awba")
+}],
+"loop": true,
+"name": &"default",
+"speed": 1.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hpnx6"]
+size = Vector2(32, 1)
+
+[node name="Old Man" type="CharacterBody2D"]
+script = ExtResource("1_aly8s")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_otnek")
+autoplay = "default"
+frame_progress = 0.43398
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 16)
+shape = SubResource("RectangleShape2D_hpnx6")

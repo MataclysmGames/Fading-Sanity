@@ -15,7 +15,7 @@ func _ready():
 	pass
 
 func play_main_theme(pitch : float = 1.0):
-	play_audio(music_player, main_theme, -25, 0.6, 0.25)
+	play_audio(music_player, main_theme, -25, pitch, 0.25)
 
 func play_forest_music(pitch : float = 1.0, transition_duration : float = 1.0):
 	play_music(forest_music, reduced_volume_db, pitch, transition_duration)

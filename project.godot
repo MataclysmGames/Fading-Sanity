@@ -24,6 +24,7 @@ SaveData="*res://scripts/save_data.gd"
 SceneLoader="*res://scenes/scene_loader.tscn"
 PlayerLoadInfo="*res://scripts/player_load_info.gd"
 MoodLighting="*res://scenes/mood_lighting.tscn"
+PauseMenu="*res://scenes/pause_menu.tscn"
 
 [display]
 

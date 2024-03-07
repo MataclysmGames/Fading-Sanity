@@ -31,6 +31,7 @@ scene_to_load = "res://scenes/level_2.tscn"
 
 [node name="Rain" parent="." instance=ExtResource("6_eryua")]
 position = Vector2(928, -288)
+lifetime = 4.0
 emission_rect_extents = Vector2(900, 10)
 
 [node name="FlyingBug" parent="." instance=ExtResource("6_o1rgt")]

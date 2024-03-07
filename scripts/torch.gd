@@ -9,7 +9,7 @@ extends Node2D
 func _ready() -> void:
 	point_light_2d.energy = light_level
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	var rand_val : float = randf_range(0.0, 1.0)
 	if rand_val > 0.95:
 		sprite_2d.flip_h = not sprite_2d.flip_h

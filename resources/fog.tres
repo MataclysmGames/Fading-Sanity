@@ -1,25 +1,10 @@
-[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://baw30n32cwwhr"]
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://baw30n32cwwhr"]
 
 [ext_resource type="Shader" path="res://resources/fog_shader.gdshader" id="1_5xsr7"]
-
-[sub_resource type="Gradient" id="Gradient_0i2yr"]
-colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1)
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_cvp3a"]
-noise_type = 0
-frequency = 0.005
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_2b7y0"]
-width = 640
-height = 360
-in_3d_space = true
-seamless = true
-seamless_blend_skirt = 0.75
-color_ramp = SubResource("Gradient_0i2yr")
-noise = SubResource("FastNoiseLite_cvp3a")
+[ext_resource type="Texture2D" uid="uid://otvxr1t54uf2" path="res://resources/fog_noise.tres" id="2_pgh0q"]
 
 [resource]
 shader = ExtResource("1_5xsr7")
-shader_parameter/density = 0.35
-shader_parameter/speed = Vector2(0.07, 0.01)
-shader_parameter/noise_texture = SubResource("NoiseTexture2D_2b7y0")
+shader_parameter/density = 0.341
+shader_parameter/speed = Vector2(0.06, 0.015)
+shader_parameter/noise_texture = ExtResource("2_pgh0q")

@@ -9,7 +9,7 @@ script = ExtResource("1_2fwhg")
 bus = &"Music"
 
 [node name="AmbiencePlayer" type="AudioStreamPlayer" parent="."]
-bus = &"Music"
+bus = &"Ambient"
 
 [node name="SFXPlayer" type="AudioStreamPlayer" parent="."]
-bus = &"Music"
+bus = &"SFX"

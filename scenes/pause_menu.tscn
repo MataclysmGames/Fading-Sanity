@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://wrkpdy0k5sta"]
+
+[ext_resource type="Script" path="res://scripts/pause_menu.gd" id="1_sivul"]
+[ext_resource type="PackedScene" uid="uid://d0qn664v61ibh" path="res://scenes/settings_container.tscn" id="2_exlwa"]
+[ext_resource type="PackedScene" uid="uid://b3xqb4wrpa43a" path="res://scenes/title_menu_button.tscn" id="3_6ud4r"]
+
+[node name="PauseMenu" type="CanvasLayer"]
+script = ExtResource("1_sivul")
+
+[node name="SettingsContainer" parent="." instance=ExtResource("2_exlwa")]
+
+[node name="QuitButton" parent="SettingsContainer" instance=ExtResource("3_6ud4r")]
+custom_minimum_size = Vector2(0, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+text = "Quit"

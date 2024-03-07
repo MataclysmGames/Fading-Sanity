@@ -5,6 +5,6 @@ extends GenericEnemy
 func _ready() -> void:
 	super()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if target:
 		sprite.flip_h = target.global_position.x > global_position.x

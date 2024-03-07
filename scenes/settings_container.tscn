@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://d0qn664v61ibh"]
+[gd_scene load_steps=7 format=3 uid="uid://d0qn664v61ibh"]
 
 [ext_resource type="PackedScene" uid="uid://b3xqb4wrpa43a" path="res://scenes/title_menu_button.tscn" id="1_ex71d"]
+[ext_resource type="Script" path="res://scripts/settings_container.gd" id="1_f80q6"]
 [ext_resource type="Theme" uid="uid://cxj6si8d5q8i7" path="res://resources/font_thin.tres" id="1_ppdf7"]
 [ext_resource type="Texture2D" uid="uid://bq4ek7x0yq66c" path="res://resources/slider_grabber.tres" id="2_y4ahn"]
 [ext_resource type="StyleBox" uid="uid://buyqi8tle4bqv" path="res://resources/button_style_flat.tres" id="3_hdbmn"]
@@ -17,6 +18,7 @@ theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
+script = ExtResource("1_f80q6")
 
 [node name="BackButton" parent="." instance=ExtResource("1_ex71d")]
 custom_minimum_size = Vector2(0, 0)

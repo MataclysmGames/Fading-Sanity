@@ -1,7 +1,7 @@
 extends Node2D
 
 @onready var player : Player = $Player
-@onready var background: BackgroundWithFog = $ParallaxBackground
+@onready var background : BackgroundWithFog = $ParallaxBackground
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

@@ -78,25 +78,27 @@ func take_damage(amount : float, knockback_direction : Vector2, player : Player)
 	if health <= 0.0 and is_alive:
 		is_alive = false
 		player.give_exp(exp_given)
-		death()
+		handle_death()
 		return
 		
 	velocity = knockback_direction * knockback_strength
 	is_stunned = true
+	handle_stun()
+
+func handle_stun():
 	stun_timer.start(stun_duration)
 	if "sprite" in self and self.sprite is AnimatedSprite2D:
 		var animated_sprite : AnimatedSprite2D = (self.sprite as AnimatedSprite2D)
 		animated_sprite.modulate = Color(1, 0, 0, 1)
 		var flash_tween : Tween = animated_sprite.create_tween()
 		flash_tween.tween_property(animated_sprite, "modulate", Color(1, 1, 1, 1), stun_duration)
-	
 
 func on_stun_end():
 	is_stunned = false
 	if health <= 0.0 and is_alive:
-		death()
+		handle_death()
 
-func death():
+func handle_death():
 	var fade_tween : Tween = create_tween()
 	if "sprite" in self and self.sprite is AnimatedSprite2D:
 		var animated_sprite : AnimatedSprite2D = (self.sprite as AnimatedSprite2D)

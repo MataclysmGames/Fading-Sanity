@@ -1,7 +1,8 @@
-[gd_scene load_steps=55 format=3 uid="uid://ka75h4icbjdj"]
+[gd_scene load_steps=54 format=3 uid="uid://ka75h4icbjdj"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_7jqql"]
 [ext_resource type="Texture2D" uid="uid://chyow3s5gcln0" path="res://assets/character.png" id="2_2mh5u"]
+[ext_resource type="Texture2D" uid="uid://kwdupqnui6wn" path="res://resources/point_light_200.tres" id="3_u86di"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5p1mj"]
 atlas = ExtResource("2_2mh5u")
@@ -378,18 +379,6 @@ animations = [{
 radius = 6.0
 height = 26.0
 
-[sub_resource type="Gradient" id="Gradient_chtdq"]
-offsets = PackedFloat32Array(0, 0.112172, 0.267303, 1)
-colors = PackedColorArray(1, 1, 1, 0.784314, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_nnib4"]
-gradient = SubResource("Gradient_chtdq")
-width = 240
-height = 240
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(0.5, 0)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_651e5"]
 size = Vector2(48, 32)
 
@@ -442,7 +431,7 @@ energy = 0.3
 range_item_cull_mask = 3
 shadow_filter_smooth = 5.0
 shadow_item_cull_mask = 0
-texture = SubResource("GradientTexture2D_nnib4")
+texture = ExtResource("3_u86di")
 
 [node name="PreciseLight" type="PointLight2D" parent="."]
 energy = 0.7
@@ -450,7 +439,7 @@ range_item_cull_mask = 3
 shadow_enabled = true
 shadow_filter = 1
 shadow_filter_smooth = 5.0
-texture = SubResource("GradientTexture2D_nnib4")
+texture = ExtResource("3_u86di")
 
 [node name="AttackAim" type="Node2D" parent="."]
 

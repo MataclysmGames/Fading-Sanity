@@ -4,8 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://dmrlsp5alopqa" path="res://assets/fading-sanity.png" id="1_mo1vn"]
 
 [sub_resource type="Gradient" id="Gradient_wxi4o"]
-offsets = PackedFloat32Array(0, 0.0668258, 0.116945, 1)
-colors = PackedColorArray(1, 1, 1, 1, 1, 0, 0, 1, 0.831373, 0.682353, 0, 1, 1, 1, 1, 0)
+offsets = PackedFloat32Array(0, 0.0551181, 0.0944882, 0.128609, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 0, 0, 0.564706, 0.831373, 0.682353, 0, 0.501961, 1, 1, 1, 0.67451, 1, 1, 1, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_olomp"]
 gradient = SubResource("Gradient_wxi4o")
@@ -20,6 +20,7 @@ light_mask = 0
 script = ExtResource("1_heokt")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
+z_index = -1
 position = Vector2(0, -3)
 blend_mode = 2
 shadow_item_cull_mask = 5

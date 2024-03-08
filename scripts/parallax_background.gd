@@ -14,7 +14,7 @@ var shader_material : ShaderMaterial
 func _ready() -> void:
 	layer_width = fog_layer.motion_mirroring.x
 	shader_material = fog_shader.material as ShaderMaterial
-	shader_material.set_shader_parameter("speed", Vector2(0.05, 0.05))
+	shader_material.set_shader_parameter("speed", Vector2(0.05, 0.01))
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

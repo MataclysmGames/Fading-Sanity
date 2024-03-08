@@ -1,9 +1,50 @@
-[gd_scene load_steps=29 format=3 uid="uid://c2p50o0pjpdy5"]
+[gd_scene load_steps=31 format=3 uid="uid://c2p50o0pjpdy5"]
 
+[ext_resource type="Texture2D" uid="uid://dhky5rqf0wmp1" path="res://external_assets/OpenGameArt/marble_wall.png" id="1_6mg5g"]
 [ext_resource type="Texture2D" uid="uid://dmrlsp5alopqa" path="res://assets/fading-sanity.png" id="1_i7cmi"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_5mlaj"]
 tile_data = PackedInt32Array(0, 65537, 1, 65536, 65537, 2, 131072, 65537, 3, 1, 131073, 1, 65537, 131073, 2, 131073, 131073, 3, 2, 196609, 1, 65538, 196609, 2, 131074, 196609, 3)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1m7w8"]
+texture = ExtResource("1_6mg5g")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+1:0/0 = 0
+1:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:0/0/physics_layer_0/angular_velocity = 0.0
+2:0/0 = 0
+2:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+2:0/0/physics_layer_0/angular_velocity = 0.0
+3:0/0 = 0
+3:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+3:0/0/physics_layer_0/angular_velocity = 0.0
+4:0/0 = 0
+4:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+4:0/0/physics_layer_0/angular_velocity = 0.0
+5:0/0 = 0
+5:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+5:0/0/physics_layer_0/angular_velocity = 0.0
+6:0/0 = 0
+6:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+6:0/0/physics_layer_0/angular_velocity = 0.0
+7:0/0 = 0
+7:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+7:0/0/physics_layer_0/angular_velocity = 0.0
+11:0/0 = 0
+11:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+11:0/0/physics_layer_0/angular_velocity = 0.0
+8:0/0 = 0
+8:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+8:0/0/physics_layer_0/angular_velocity = 0.0
+9:0/0 = 0
+9:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+9:0/0/physics_layer_0/angular_velocity = 0.0
+10:0/0 = 0
+10:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+10:0/0/physics_layer_0/angular_velocity = 0.0
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_aekq7"]
 polygon = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -369,6 +410,7 @@ terrain_set_0/mode = 0
 terrain_set_0/terrain_0/name = "AutoGround"
 terrain_set_0/terrain_0/color = Color(0.698039, 0, 0.380392, 1)
 sources/1 = SubResource("TileSetAtlasSource_vn0iv")
+sources/0 = SubResource("TileSetAtlasSource_1m7w8")
 pattern_0 = SubResource("TileMapPattern_5mlaj")
 
 [node name="TileMap" type="TileMap"]

@@ -1,10 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://dlqrguejxilso"]
+[gd_scene load_steps=6 format=3 uid="uid://dlqrguejxilso"]
 
 [ext_resource type="Script" path="res://scripts/title.gd" id="1_riart"]
 [ext_resource type="PackedScene" uid="uid://ce2t2vvxagejm" path="res://scenes/title_container.tscn" id="2_t1l8w"]
 [ext_resource type="Script" path="res://scripts/title_container.gd" id="3_ujooa"]
 [ext_resource type="PackedScene" uid="uid://d0qn664v61ibh" path="res://scenes/settings_container.tscn" id="3_xugr4"]
-[ext_resource type="Script" path="res://scripts/settings_container.gd" id="5_tynar"]
 [ext_resource type="PackedScene" uid="uid://barckaima48ol" path="res://scenes/background_spiral.tscn" id="6_12ipq"]
 
 [node name="Title" type="Control"]
@@ -29,4 +28,3 @@ script = ExtResource("3_ujooa")
 [node name="SettingsContainer" parent="." instance=ExtResource("3_xugr4")]
 visible = false
 layout_mode = 1
-script = ExtResource("5_tynar")

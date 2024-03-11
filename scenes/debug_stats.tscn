@@ -85,15 +85,29 @@ theme = ExtResource("2_cpcep")
 theme_override_font_sizes/font_size = 8
 vertical_alignment = 1
 
-[node name="DrawCallsLabel" type="Label" parent="GridContainer"]
+[node name="TimeProcessLabel" type="Label" parent="GridContainer"]
 layout_mode = 2
 theme = ExtResource("2_cpcep")
 theme_override_font_sizes/font_size = 8
-text = "Draw Calls"
+text = "Process Time"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="DrawCallsValue" type="Label" parent="GridContainer"]
+[node name="TimeProcessValue" type="Label" parent="GridContainer"]
+layout_mode = 2
+theme = ExtResource("2_cpcep")
+theme_override_font_sizes/font_size = 8
+vertical_alignment = 1
+
+[node name="TimePhysicsProcessLabel" type="Label" parent="GridContainer"]
+layout_mode = 2
+theme = ExtResource("2_cpcep")
+theme_override_font_sizes/font_size = 8
+text = "Physics Time"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="TimePhysicsProcessValue" type="Label" parent="GridContainer"]
 layout_mode = 2
 theme = ExtResource("2_cpcep")
 theme_override_font_sizes/font_size = 8

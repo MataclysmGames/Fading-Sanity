@@ -5,7 +5,8 @@ extends CanvasLayer
 @onready var object_count_value: Label = $GridContainer/ObjectCountValue
 @onready var processor_value: Label = $GridContainer/ProcessorValue
 @onready var graphics_value: Label = $GridContainer/GraphicsValue
-@onready var draw_calls_value: Label = $GridContainer/DrawCallsValue
+@onready var time_process_value: Label = $GridContainer/TimeProcessValue
+@onready var time_physics_process_value: Label = $GridContainer/TimePhysicsProcessValue
 
 var update_labels_tween : Tween
 
@@ -27,4 +28,5 @@ func update_labels():
 	object_count_value.text = "%d" % Performance.get_monitor(Performance.OBJECT_COUNT)
 	processor_value.text = "%s x%d" % [OS.get_processor_name(), OS.get_processor_count()]
 	graphics_value.text = "%s" % [RenderingServer.get_video_adapter_name()]
-	draw_calls_value.text = "%d" % [Performance.get_monitor(Performance.PHYSICS_2D_COLLISION_PAIRS)]
+	time_process_value.text = "%.1f ms" % [Performance.get_monitor(Performance.TIME_PROCESS) * 1000.0]
+	time_physics_process_value.text = "%.1f ms" % [Performance.get_monitor(Performance.TIME_PHYSICS_PROCESS) * 1000.0]

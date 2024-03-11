@@ -24,12 +24,14 @@ const one_shot_animations : Array[String] = ["disintegrate", "jump", "land", "de
 var gravity : float = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 # Player state
+var health : float = 100.0
 var is_alive : bool = true
 var can_handle_user_input : bool = true
 var frames_since_grounded = 0
 var has_jumped : bool = false
 var on_ground : bool = true
 var has_been_on_ground : bool = false
+var has_i_frames : bool = false
 
 # Player stats
 var attack_damage : float = 24.9
@@ -58,13 +60,16 @@ func _ready() -> void:
 	camera.limit_left = camera_limit_left
 	camera.limit_right = camera_limit_right
 	camera.limit_bottom = camera_limit_bottom
+	
+	var current_scene_file : String = get_tree().current_scene.scene_file_path
+	SaveData.update_current_scene(current_scene_file)
 
 func _physics_process(delta):
 	handle_gravity(delta)
 	if is_alive and can_handle_user_input:
 		handle_aim()
 		handle_jump()
-		handle_horizontal_movement()
+		handle_horizontal_movement(delta)
 		handle_camera_target()
 	if (is_alive and can_handle_user_input) or not has_been_on_ground:
 		move_and_slide()
@@ -76,7 +81,7 @@ func _process(delta: float) -> void:
 		ScreenShader.set_aberration(clampf(x_dist / 4000.0, -0.05, 0.05))
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("escape"):
+	if can_handle_user_input and event.is_action_pressed("escape"):
 		PauseMenu.toggle_pause(self)
 	if event is InputEventMouseButton and can_handle_user_input:
 		if (event as InputEventMouseButton).pressed:
@@ -128,14 +133,14 @@ func handle_jump():
 			has_jumped = true
 			update_animation("jump", true)
 
-func handle_horizontal_movement():
+func handle_horizontal_movement(delta):
 	var direction = Input.get_axis("left", "right")
 	if direction:
-		velocity.x = move_toward(velocity.x, direction * SPEED, SPEED / 4)
+		velocity.x = move_toward(velocity.x, direction * SPEED, delta * SPEED * 15)
 	elif is_on_floor():
-		velocity.x = move_toward(velocity.x, 0, SPEED / 2)
+		velocity.x = move_toward(velocity.x, 0, delta * SPEED * 30)
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED / 3)
+		velocity.x = move_toward(velocity.x, 0, delta * SPEED * 15)
 	
 	if is_on_floor():
 		if velocity.x != 0:
@@ -152,6 +157,8 @@ func handle_horizontal_movement():
 		sprite.flip_h = false
 
 func update_animation(animation_name : String, force_restart : bool = false, play_backwards : bool = false):
+	if not is_alive:
+		return
 	if force_restart or sprite.animation != animation_name and not one_shot_animation_playing:
 		#print(animation_name)
 		if play_backwards:
@@ -168,8 +175,15 @@ func on_animation_finished():
 		can_handle_user_input = true
 
 func death():
-	update_animation("death", true)
+	if is_on_floor():
+		update_animation("death", true)
+	else:
+		update_animation("disintegrate", true)
 	is_alive = false
+	can_handle_user_input = false
+	var death_tween : Tween = create_tween()
+	death_tween.tween_interval(1.0)
+	death_tween.tween_callback(SceneLoader.reload_scene)
 	
 func reverse_death():
 	update_animation("death", true, true)
@@ -194,7 +208,7 @@ func handle_camera_target():
 		camera_target.position.y = move_toward(camera_target.position.y, look_up_down_direction * 50, 1.5)
 
 func avg(list : Array[float]) -> float:
-	var total = 0.0
+	var total : float = 0.0
 	for val in list:
 		total += val
 	return total / len(list)
@@ -202,3 +216,23 @@ func avg(list : Array[float]) -> float:
 func give_exp(amount : float):
 	total_exp += amount
 	print("Now have %d exp" % total_exp)
+
+func take_damage(amount : float, knockback_direction : Vector2):
+	if has_i_frames:
+		return
+	
+	has_i_frames = true
+	health -= amount
+	print("Player has %d health." % [health])
+	velocity = knockback_direction * 300
+	
+	var hit_tween : Tween = create_tween()
+	hit_tween.tween_property(sprite, "modulate", Color(1, 0, 0, 0.5), 0)
+	hit_tween.tween_interval(0.25)
+	hit_tween.tween_property(sprite, "modulate", Color(1, 1, 1, 0.5), 0.25)
+	hit_tween.tween_interval(0.25)
+	hit_tween.tween_property(sprite, "modulate", Color(1, 1, 1, 1), 0)
+	hit_tween.tween_callback(func(): has_i_frames = false)
+
+	if health <= 0.0 and is_alive:
+		death()

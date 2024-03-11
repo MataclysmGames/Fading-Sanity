@@ -29,7 +29,7 @@ func get_resource() -> SaveDataResource:
 	return save_resource
 
 func has_save() -> bool:
-	return save_resource.game_start_time != 0
+	return save_resource.player != null
 
 func get_volume(bus_name : String) -> float:
 	if not save_resource.audio_bus_volumes.has(bus_name):
@@ -41,6 +41,13 @@ func set_volume(bus_name : String, value : float):
 	save_to_disk()
 
 func start_new():
-	purge_save_data()
-	save_resource.game_start_time = Time.get_unix_time_from_system() * 1000
+	save_resource.player = PlayerSaveData.new()
 	save_to_disk()
+
+func update_current_scene(file_path : String):
+	save_resource.player.last_scene_loaded = file_path
+	save_to_disk()
+
+func get_last_scene() -> String:
+	return save_resource.player.last_scene_loaded
+	

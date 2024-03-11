@@ -23,16 +23,18 @@ func focus_first_button():
 
 func on_new_game():
 	new_game_button.release_focus()
-	SaveData.purge_save_data()
 	SaveData.start_new()
 	BackgroundAudio.play_bell()
 	PlayerLoadInfo.load_animation = "death"
 	SceneLoader.fade_in_scene("res://scenes/levels/intro.tscn", 3.4, 1.0)
 
 func on_continue():
+	var last_scene : String = SaveData.get_last_scene()
+	if not last_scene:
+		last_scene = "res://scenes/levels/home.tscn"
 	continue_button.release_focus()
 	BackgroundAudio.play_bell()
-	SceneLoader.fade_in_scene("res://scenes/levels/home.tscn", 3.4, 1.0)
+	SceneLoader.fade_in_scene(last_scene, 3.4, 1.0)
 
 func on_exit():
 	get_tree().quit()

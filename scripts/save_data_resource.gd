@@ -2,8 +2,7 @@ class_name SaveDataResource
 extends Resource
 
 # Game Stats
-@export var game_start_time : int = 0
-@export var game_finish_time : int = 0
+@export var player : PlayerSaveData
 
 # Settings
 @export var audio_bus_volumes : Dictionary = {
@@ -12,6 +11,6 @@ extends Resource
 	"SFX": 0.8,
 	"Ambient": 1.0
 }
-@export var allow_aberration : bool = true
-@export var allow_pixelation : bool = true
+@export var allow_aberration : bool = false
+@export var allow_pixelation : bool = false
 @export var show_debug_stats : bool = false

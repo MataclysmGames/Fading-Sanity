@@ -48,6 +48,7 @@ func _physics_process(delta: float) -> void:
 
 	if respects_gravity and not is_on_floor():
 		velocity.y += gravity * delta
+	velocity.y = clampf(velocity.y, -500, 500)
 	move_and_slide()
 
 func on_target_process(target : Player):

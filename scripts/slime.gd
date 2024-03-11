@@ -7,6 +7,7 @@ extends GenericEnemy
 
 @onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
 @onready var collision : CollisionShape2D = $CollisionShape2D
+@onready var hurt_box : Area2D = $HurtBox
 
 var timer : Timer = Timer.new()
 var rotation_index : int = 0
@@ -20,6 +21,8 @@ func _ready() -> void:
 	timer.autostart = true
 	timer.one_shot = false
 	timer.start(0.35 + randf_range(0.00, 0.15))
+	
+	hurt_box.body_entered.connect(on_hurtbox_entered)
 
 func _process(_delta: float) -> void:
 	if not is_stunned:
@@ -68,3 +71,10 @@ func split():
 		slime_split_2.jump_velocity = jump_velocity / 2
 		get_parent().add_child(slime_split_1)
 		get_parent().add_child(slime_split_2)
+
+func on_hurtbox_entered(body : Node2D):
+	if body is Player:
+		var player := body as Player
+		var knockback_direction : Vector2 = sprite.global_position.direction_to(body.global_position).normalized()
+		knockback_direction.y = clampf(knockback_direction.y, -0.4, -1.0)
+		player.take_damage(25, knockback_direction)

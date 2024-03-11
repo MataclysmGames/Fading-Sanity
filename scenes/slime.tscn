@@ -1,14 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://c1yjwwfke3qgd"]
+[gd_scene load_steps=9 format=3 uid="uid://c1yjwwfke3qgd"]
 
 [ext_resource type="Script" path="res://scripts/slime.gd" id="1_0vj71"]
 [ext_resource type="Texture2D" uid="uid://cn25pjrgr7jsa" path="res://assets/slime.png" id="1_kb1o3"]
-[ext_resource type="Shader" path="res://resources/character_shader.gdshader" id="2_p70rq"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_6o8op"]
-shader = ExtResource("2_p70rq")
-shader_parameter/resolution = Vector2(32, 32)
-shader_parameter/pixelate = false
-shader_parameter/aberration = 1.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i0gn0"]
 atlas = ExtResource("1_kb1o3")
@@ -29,7 +22,7 @@ animations = [{
 size = Vector2(28, 30)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l0b2j"]
-size = Vector2(34, 35)
+size = Vector2(30, 32)
 
 [sub_resource type="Gradient" id="Gradient_q5vo1"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
@@ -46,7 +39,6 @@ speed = 30.0
 detection_radius = 128.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-material = SubResource("ShaderMaterial_6o8op")
 sprite_frames = SubResource("SpriteFrames_rhc0p")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -56,7 +48,7 @@ shape = SubResource("RectangleShape2D_o60wx")
 [node name="HurtBox" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
-position = Vector2(0, 1.5)
+position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_l0b2j")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]

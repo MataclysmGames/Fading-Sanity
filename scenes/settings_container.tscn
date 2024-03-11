@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://d0qn664v61ibh"]
+[gd_scene load_steps=14 format=3 uid="uid://d0qn664v61ibh"]
 
 [ext_resource type="PackedScene" uid="uid://b3xqb4wrpa43a" path="res://scenes/title_menu_button.tscn" id="1_ex71d"]
 [ext_resource type="Script" path="res://scripts/settings_container.gd" id="1_f80q6"]
@@ -6,6 +6,18 @@
 [ext_resource type="Texture2D" uid="uid://bq4ek7x0yq66c" path="res://resources/slider_grabber.tres" id="2_y4ahn"]
 [ext_resource type="StyleBox" uid="uid://buyqi8tle4bqv" path="res://resources/button_style_flat.tres" id="3_hdbmn"]
 [ext_resource type="Texture2D" uid="uid://duw33ed6g6bq2" path="res://resources/slider_grabber_highlight.tres" id="4_ba53t"]
+[ext_resource type="Texture2D" uid="uid://dbonk7nvy8y02" path="res://resources/white_box_16.tres" id="7_p4b7y"]
+[ext_resource type="Texture2D" uid="uid://b7jm1drmklvab" path="res://resources/gray_box_16.tres" id="8_1op1d"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cctok"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_45lem"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1irnm"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j0pxa"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dkmup"]
 
 [node name="SettingsContainer" type="MarginContainer"]
 custom_minimum_size = Vector2(300, 300)
@@ -162,8 +174,8 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 5
 focus_neighbor_top = NodePath("../SFXVolumeSlider")
-focus_neighbor_bottom = NodePath(".")
-focus_next = NodePath(".")
+focus_neighbor_bottom = NodePath("../../GridContainer2/AllowAberrationCheckBox")
+focus_next = NodePath("../../GridContainer2/AllowAberrationCheckBox")
 focus_previous = NodePath("../SFXVolumeSlider")
 theme = ExtResource("1_ppdf7")
 theme_override_icons/grabber = ExtResource("2_y4ahn")
@@ -180,4 +192,109 @@ layout_mode = 2
 theme = ExtResource("1_ppdf7")
 text = "0"
 horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BlankLabel4" type="Label" parent="GridContainer"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+theme = ExtResource("1_ppdf7")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="BlankLabel5" type="Label" parent="GridContainer"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+theme = ExtResource("1_ppdf7")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="BlankLabel6" type="Label" parent="GridContainer"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+theme = ExtResource("1_ppdf7")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="GridContainer2" type="GridContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_constants/h_separation = 8
+columns = 2
+
+[node name="AllowAberrationLabel" type="Label" parent="GridContainer2"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+theme = ExtResource("1_ppdf7")
+text = "Allow Aberration"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="AllowAberrationCheckBox" type="CheckBox" parent="GridContainer2"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../../GridContainer/AmbientVolumeSlider")
+focus_neighbor_bottom = NodePath("../AllowPixelationCheckBox")
+focus_next = NodePath("../AllowPixelationCheckBox")
+focus_previous = NodePath("../../GridContainer/AmbientVolumeSlider")
+theme_override_icons/checked = ExtResource("7_p4b7y")
+theme_override_icons/unchecked = ExtResource("8_1op1d")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_cctok")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_45lem")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_1irnm")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_j0pxa")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_dkmup")
+button_pressed = true
+flat = true
+
+[node name="AllowPixelationLabel" type="Label" parent="GridContainer2"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+theme = ExtResource("1_ppdf7")
+text = "Allow Pixelation"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="AllowPixelationCheckBox" type="CheckBox" parent="GridContainer2"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../AllowAberrationCheckBox")
+focus_neighbor_bottom = NodePath("../ShowDebugCheckBox")
+focus_next = NodePath("../ShowDebugCheckBox")
+focus_previous = NodePath("../AllowAberrationCheckBox")
+theme_override_icons/checked = ExtResource("7_p4b7y")
+theme_override_icons/unchecked = ExtResource("8_1op1d")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_cctok")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_45lem")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_1irnm")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_j0pxa")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_dkmup")
+flat = true
+
+[node name="ShowDebugLabel" type="Label" parent="GridContainer2"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+theme = ExtResource("1_ppdf7")
+text = "Show Debug Stats"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="ShowDebugCheckBox" type="CheckBox" parent="GridContainer2"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../AllowPixelationCheckBox")
+focus_neighbor_bottom = NodePath(".")
+focus_next = NodePath(".")
+focus_previous = NodePath("../AllowPixelationCheckBox")
+theme_override_icons/checked = ExtResource("7_p4b7y")
+theme_override_icons/unchecked = ExtResource("8_1op1d")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_cctok")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_45lem")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_1irnm")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_j0pxa")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_dkmup")
+flat = true
+
+[node name="BlankLabel" type="Label" parent="GridContainer2"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+theme = ExtResource("1_ppdf7")
+horizontal_alignment = 2
 vertical_alignment = 1

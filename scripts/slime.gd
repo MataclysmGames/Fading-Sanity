@@ -6,9 +6,11 @@ extends GenericEnemy
 @export var initial_scale : Vector2 = Vector2(1, 1)
 
 @onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
+@onready var collision : CollisionShape2D = $CollisionShape2D
 
 var timer : Timer = Timer.new()
 var rotation_index : int = 0
+var rotation_delta : int = 1
 
 func _ready() -> void:
 	super()
@@ -17,7 +19,7 @@ func _ready() -> void:
 	timer.timeout.connect(on_timer)
 	timer.autostart = true
 	timer.one_shot = false
-	timer.start(0.25 + randf_range(0.00, 0.15))
+	timer.start(0.35 + randf_range(0.00, 0.15))
 
 func _process(_delta: float) -> void:
 	if not is_stunned:
@@ -28,7 +30,9 @@ func on_timer():
 		jump()
 
 func jump():
-	rotation_index = (rotation_index + 1) % 4
+	rotation_index = rotation_index + rotation_delta
+	if abs(rotation_index) >= 3:
+		rotation_delta *= -1
 	var next_rotation : float = rotation_index * 90
 	var tween : Tween = create_tween()
 	tween.tween_property(self, "scale", Vector2(initial_scale.x, initial_scale.y * 0.8), 0.25)
@@ -40,7 +44,7 @@ func jump():
 func handle_death():
 	var fade_tween : Tween = create_tween()
 	sprite.modulate = Color(1, 0, 0, 1)
-	if rotation_index % 2 == 0:
+	if rotation_index % 2 == 1:
 		fade_tween.tween_property(self, "scale", Vector2(initial_scale.x, 0), 1)
 	else:
 		fade_tween.tween_property(self, "scale", Vector2(0, initial_scale.y), 1)
@@ -52,14 +56,14 @@ func split():
 	if splits_remaining > 0:
 		var slime_split_1 : Slime = (load("res://scenes/slime.tscn") as PackedScene).instantiate() as Slime
 		var slime_split_2 : Slime = (load("res://scenes/slime.tscn") as PackedScene).instantiate() as Slime
-		slime_split_1.global_position = global_position + Vector2(-10, 0)
-		slime_split_2.global_position = global_position + Vector2(10, 0)
+		slime_split_1.global_position = global_position + Vector2(-20, -20)
+		slime_split_2.global_position = global_position + Vector2(20, -20)
 		slime_split_1.splits_remaining = splits_remaining - 1
 		slime_split_2.splits_remaining = splits_remaining - 1
 		slime_split_1.initial_scale = initial_scale / 2
 		slime_split_2.initial_scale = initial_scale / 2
-		slime_split_1.health = health / 2
-		slime_split_2.health = health / 2
+		slime_split_1.max_health = max_health / 2
+		slime_split_2.max_health = max_health / 2
 		slime_split_1.jump_velocity = jump_velocity / 2
 		slime_split_2.jump_velocity = jump_velocity / 2
 		get_parent().add_child(slime_split_1)

@@ -41,28 +41,23 @@ position = Vector2(207, 294)
 
 [node name="Slime2" parent="." instance=ExtResource("7_aqi8x")]
 position = Vector2(1384, 292)
-health = 200.0
 speed = 40.0
 
 [node name="Slime4" parent="." instance=ExtResource("7_aqi8x")]
 position = Vector2(224, 672)
-health = 200.0
 speed = 40.0
 
 [node name="Slime5" parent="." instance=ExtResource("7_aqi8x")]
 position = Vector2(721, 494)
-health = 200.0
 speed = 40.0
 detection_radius = 256.0
 
 [node name="Slime6" parent="." instance=ExtResource("7_aqi8x")]
 position = Vector2(531, 680)
-health = 200.0
 speed = 40.0
 
 [node name="Slime7" parent="." instance=ExtResource("7_aqi8x")]
 position = Vector2(666, 681)
-health = 200.0
 speed = 40.0
 
 [node name="Transition Trigger" parent="." instance=ExtResource("7_qoe14")]

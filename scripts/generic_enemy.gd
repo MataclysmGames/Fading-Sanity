@@ -1,7 +1,7 @@
 class_name GenericEnemy
 extends CharacterBody2D
 
-@export var health : float = 100.0
+@export var max_health : float = 100.0
 @export var speed : float = 60.0
 @export var exp_given : float = 1.0
 @export var detection_radius : float = 64
@@ -17,9 +17,11 @@ var target : Player
 var initial_position : Vector2
 var is_stunned : bool = false
 var stun_timer : Timer = Timer.new()
+var health : float
 var is_alive : bool = true
 
 func _ready() -> void:
+	health = max_health
 	initial_position = global_position
 	detection_area.body_entered.connect(on_body_detected)
 	detection_area.body_exited.connect(on_body_undetected)

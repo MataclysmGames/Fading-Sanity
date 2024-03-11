@@ -1,7 +1,14 @@
-[gd_scene load_steps=9 format=3 uid="uid://c1yjwwfke3qgd"]
+[gd_scene load_steps=11 format=3 uid="uid://c1yjwwfke3qgd"]
 
 [ext_resource type="Script" path="res://scripts/slime.gd" id="1_0vj71"]
 [ext_resource type="Texture2D" uid="uid://cn25pjrgr7jsa" path="res://assets/slime.png" id="1_kb1o3"]
+[ext_resource type="Shader" path="res://resources/character_shader.gdshader" id="2_p70rq"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6o8op"]
+shader = ExtResource("2_p70rq")
+shader_parameter/resolution = Vector2(32, 32)
+shader_parameter/pixelate = false
+shader_parameter/aberration = 1.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i0gn0"]
 atlas = ExtResource("1_kb1o3")
@@ -39,6 +46,7 @@ speed = 30.0
 detection_radius = 128.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_6o8op")
 sprite_frames = SubResource("SpriteFrames_rhc0p")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

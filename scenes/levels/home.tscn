@@ -67,7 +67,6 @@ texture = ExtResource("8_8k4eu")
 
 [node name="Old Man" parent="." instance=ExtResource("9_gl3qd")]
 position = Vector2(938, 276)
-health = 9999.0
 speed = 0.0
 exp_given = 1500.0
 detection_radius = 9999.0

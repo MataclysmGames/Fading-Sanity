@@ -8,7 +8,7 @@ var hover_effect_active : bool = false
 var initial_position : Vector2
 var initial_position_set : bool = false
 
-func _process(delta):
+func _process(_delta):
 	register_initial_position()
 	if is_hovered():
 		grab_focus()

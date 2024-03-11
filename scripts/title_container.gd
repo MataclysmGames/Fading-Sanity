@@ -27,12 +27,12 @@ func on_new_game():
 	SaveData.start_new()
 	BackgroundAudio.play_bell()
 	PlayerLoadInfo.load_animation = "death"
-	SceneLoader.fade_in_scene("res://scenes/intro.tscn", 3.4, 1.0)
+	SceneLoader.fade_in_scene("res://scenes/levels/intro.tscn", 3.4, 1.0)
 
 func on_continue():
 	continue_button.release_focus()
 	BackgroundAudio.play_bell()
-	SceneLoader.fade_in_scene("res://scenes/home.tscn", 3.4, 1.0)
+	SceneLoader.fade_in_scene("res://scenes/levels/home.tscn", 3.4, 1.0)
 
 func on_exit():
 	get_tree().quit()

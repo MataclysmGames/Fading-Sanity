@@ -4,8 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://dmrlsp5alopqa" path="res://assets/fading-sanity.png" id="1_mo1vn"]
 
 [sub_resource type="Gradient" id="Gradient_wxi4o"]
-offsets = PackedFloat32Array(0, 0.0551181, 0.0944882, 0.128609, 1)
-colors = PackedColorArray(1, 1, 1, 1, 1, 0, 0, 0.564706, 0.831373, 0.682353, 0, 0.501961, 1, 1, 1, 0.67451, 1, 1, 1, 0)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_olomp"]
 gradient = SubResource("Gradient_wxi4o")

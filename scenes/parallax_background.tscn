@@ -1,23 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://bp211kt1oio2s"]
+[gd_scene load_steps=4 format=3 uid="uid://bp211kt1oio2s"]
 
 [ext_resource type="Texture2D" uid="uid://cde384fbev3s0" path="res://assets/background.png" id="1_imv07"]
 [ext_resource type="Script" path="res://scripts/parallax_background.gd" id="1_urn0o"]
 [ext_resource type="Material" uid="uid://baw30n32cwwhr" path="res://resources/fog.tres" id="2_1cd48"]
-
-[sub_resource type="Gradient" id="Gradient_pclpd"]
-colors = PackedColorArray(0.537255, 0.537255, 0.537255, 0.698039, 0, 0, 0, 0)
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_1hf3j"]
-noise_type = 0
-frequency = 0.006
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_wbbdp"]
-width = 1280
-height = 720
-seamless = true
-seamless_blend_skirt = 0.75
-color_ramp = SubResource("Gradient_pclpd")
-noise = SubResource("FastNoiseLite_1hf3j")
 
 [node name="ParallaxBackground" type="ParallaxBackground"]
 layer = -1
@@ -32,24 +17,10 @@ texture = ExtResource("1_imv07")
 offset = Vector2(320, 180)
 
 [node name="FogLayer" type="ParallaxLayer" parent="."]
-z_index = -2
+z_index = 4
 motion_mirroring = Vector2(640, 360)
-
-[node name="FogNoise" type="TextureRect" parent="FogLayer"]
-visible = false
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_right = 1280.0
-offset_bottom = 720.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = SubResource("NoiseTexture2D_wbbdp")
 
 [node name="FogShader" type="ColorRect" parent="FogLayer"]
 material = ExtResource("2_1cd48")
 offset_right = 640.0
 offset_bottom = 360.0
-color = Color(0.521569, 0.521569, 0.521569, 1)

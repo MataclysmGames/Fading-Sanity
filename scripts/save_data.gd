@@ -1,5 +1,7 @@
 extends Node
 
+signal updated(resource: SaveDataResource)
+
 const save_resource_name : String = "user://save.tres"
 
 var save_resource : SaveDataResource
@@ -15,12 +17,16 @@ func reload():
 
 func save_to_disk():
 	ResourceSaver.save(save_resource, save_resource_name)
+	updated.emit(save_resource)
 
 func purge_save_data():
-	var new_save_resource = SaveDataResource.new()
+	var new_save_resource : SaveDataResource = SaveDataResource.new()
 	new_save_resource.audio_bus_volumes = save_resource.audio_bus_volumes
 	save_resource = new_save_resource
 	save_to_disk()
+	
+func get_resource() -> SaveDataResource:
+	return save_resource
 
 func has_save() -> bool:
 	return save_resource.game_start_time != 0

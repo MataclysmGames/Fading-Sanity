@@ -69,6 +69,12 @@ func _physics_process(delta):
 	if (is_alive and can_handle_user_input) or not has_been_on_ground:
 		move_and_slide()
 
+func _process(delta: float) -> void:
+	if (SaveData.save_resource as SaveDataResource).allow_aberration:
+		var x_int : int = global_position.x
+		var x_dist : int = (abs(x_int) % 400) - 200
+		ScreenShader.set_aberration(clampf(x_dist / 4000.0, -0.05, 0.05))
+
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("escape"):
 		PauseMenu.toggle_pause(self)

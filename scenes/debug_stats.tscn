@@ -1,0 +1,100 @@
+[gd_scene load_steps=3 format=3 uid="uid://0uk83p1ohfly"]
+
+[ext_resource type="Script" path="res://scripts/debug_stats.gd" id="1_as2mr"]
+[ext_resource type="Theme" uid="uid://cxj6si8d5q8i7" path="res://resources/font_thin.tres" id="2_cpcep"]
+
+[node name="DebugStats" type="CanvasLayer"]
+layer = 128
+script = ExtResource("1_as2mr")
+
+[node name="GridContainer" type="GridContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 2
+columns = 2
+
+[node name="ProcessorLabel" type="Label" parent="GridContainer"]
+layout_mode = 2
+theme = ExtResource("2_cpcep")
+theme_override_font_sizes/font_size = 8
+text = "Processor"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="ProcessorValue" type="Label" parent="GridContainer"]
+layout_mode = 2
+theme = ExtResource("2_cpcep")
+theme_override_font_sizes/font_size = 8
+vertical_alignment = 1
+
+[node name="GraphicsLabel" type="Label" parent="GridContainer"]
+layout_mode = 2
+theme = ExtResource("2_cpcep")
+theme_override_font_sizes/font_size = 8
+text = "Graphics"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="GraphicsValue" type="Label" parent="GridContainer"]
+layout_mode = 2
+theme = ExtResource("2_cpcep")
+theme_override_font_sizes/font_size = 8
+vertical_alignment = 1
+
+[node name="ResolutionLabel" type="Label" parent="GridContainer"]
+layout_mode = 2
+theme = ExtResource("2_cpcep")
+theme_override_font_sizes/font_size = 8
+text = "Resolution"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="ResolutionValue" type="Label" parent="GridContainer"]
+layout_mode = 2
+theme = ExtResource("2_cpcep")
+theme_override_font_sizes/font_size = 8
+vertical_alignment = 1
+
+[node name="FpsLabel" type="Label" parent="GridContainer"]
+layout_mode = 2
+theme = ExtResource("2_cpcep")
+theme_override_font_sizes/font_size = 8
+text = "FPS"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="FpsValue" type="Label" parent="GridContainer"]
+layout_mode = 2
+theme = ExtResource("2_cpcep")
+theme_override_font_sizes/font_size = 8
+vertical_alignment = 1
+
+[node name="ObjectCountLabel" type="Label" parent="GridContainer"]
+layout_mode = 2
+theme = ExtResource("2_cpcep")
+theme_override_font_sizes/font_size = 8
+text = "Objects"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="ObjectCountValue" type="Label" parent="GridContainer"]
+layout_mode = 2
+theme = ExtResource("2_cpcep")
+theme_override_font_sizes/font_size = 8
+vertical_alignment = 1
+
+[node name="DrawCallsLabel" type="Label" parent="GridContainer"]
+layout_mode = 2
+theme = ExtResource("2_cpcep")
+theme_override_font_sizes/font_size = 8
+text = "Draw Calls"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="DrawCallsValue" type="Label" parent="GridContainer"]
+layout_mode = 2
+theme = ExtResource("2_cpcep")
+theme_override_font_sizes/font_size = 8
+vertical_alignment = 1

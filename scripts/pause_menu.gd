@@ -5,7 +5,6 @@ extends CanvasLayer
 
 var player : Player
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	hide()
 	settings_container.back_button.text = "Resume"
@@ -26,15 +25,12 @@ func _ready() -> void:
 	settings_container.master_volume_slider.focus_previous = quit_button.get_path()
 	settings_container.master_volume_slider.focus_neighbor_top = quit_button.get_path()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
 func toggle_pause(player : Player):
 	self.player = player
 	visible = not visible
 	player.can_handle_user_input = not visible
 	if visible:
+		settings_container.update_settings_from_save()
 		settings_container.back_button.grab_focus()
 
 func resume_game():

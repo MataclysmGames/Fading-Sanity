@@ -8,8 +8,12 @@ layer = 128
 script = ExtResource("1_as2mr")
 
 [node name="GridContainer" type="GridContainer" parent="."]
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -75.0
+offset_right = 53.0
+grow_vertical = 0
 mouse_filter = 2
 theme_override_constants/h_separation = 8
 theme_override_constants/v_separation = 2
@@ -18,7 +22,7 @@ columns = 2
 [node name="ProcessorLabel" type="Label" parent="GridContainer"]
 layout_mode = 2
 theme = ExtResource("2_cpcep")
-theme_override_font_sizes/font_size = 8
+theme_override_font_sizes/font_size = 6
 text = "Processor"
 horizontal_alignment = 2
 vertical_alignment = 1
@@ -26,13 +30,13 @@ vertical_alignment = 1
 [node name="ProcessorValue" type="Label" parent="GridContainer"]
 layout_mode = 2
 theme = ExtResource("2_cpcep")
-theme_override_font_sizes/font_size = 8
+theme_override_font_sizes/font_size = 6
 vertical_alignment = 1
 
 [node name="GraphicsLabel" type="Label" parent="GridContainer"]
 layout_mode = 2
 theme = ExtResource("2_cpcep")
-theme_override_font_sizes/font_size = 8
+theme_override_font_sizes/font_size = 6
 text = "Graphics"
 horizontal_alignment = 2
 vertical_alignment = 1
@@ -40,13 +44,13 @@ vertical_alignment = 1
 [node name="GraphicsValue" type="Label" parent="GridContainer"]
 layout_mode = 2
 theme = ExtResource("2_cpcep")
-theme_override_font_sizes/font_size = 8
+theme_override_font_sizes/font_size = 6
 vertical_alignment = 1
 
 [node name="ResolutionLabel" type="Label" parent="GridContainer"]
 layout_mode = 2
 theme = ExtResource("2_cpcep")
-theme_override_font_sizes/font_size = 8
+theme_override_font_sizes/font_size = 6
 text = "Resolution"
 horizontal_alignment = 2
 vertical_alignment = 1
@@ -54,13 +58,13 @@ vertical_alignment = 1
 [node name="ResolutionValue" type="Label" parent="GridContainer"]
 layout_mode = 2
 theme = ExtResource("2_cpcep")
-theme_override_font_sizes/font_size = 8
+theme_override_font_sizes/font_size = 6
 vertical_alignment = 1
 
 [node name="FpsLabel" type="Label" parent="GridContainer"]
 layout_mode = 2
 theme = ExtResource("2_cpcep")
-theme_override_font_sizes/font_size = 8
+theme_override_font_sizes/font_size = 6
 text = "FPS"
 horizontal_alignment = 2
 vertical_alignment = 1
@@ -68,13 +72,13 @@ vertical_alignment = 1
 [node name="FpsValue" type="Label" parent="GridContainer"]
 layout_mode = 2
 theme = ExtResource("2_cpcep")
-theme_override_font_sizes/font_size = 8
+theme_override_font_sizes/font_size = 6
 vertical_alignment = 1
 
 [node name="ObjectCountLabel" type="Label" parent="GridContainer"]
 layout_mode = 2
 theme = ExtResource("2_cpcep")
-theme_override_font_sizes/font_size = 8
+theme_override_font_sizes/font_size = 6
 text = "Objects"
 horizontal_alignment = 2
 vertical_alignment = 1
@@ -82,13 +86,13 @@ vertical_alignment = 1
 [node name="ObjectCountValue" type="Label" parent="GridContainer"]
 layout_mode = 2
 theme = ExtResource("2_cpcep")
-theme_override_font_sizes/font_size = 8
+theme_override_font_sizes/font_size = 6
 vertical_alignment = 1
 
 [node name="TimeProcessLabel" type="Label" parent="GridContainer"]
 layout_mode = 2
 theme = ExtResource("2_cpcep")
-theme_override_font_sizes/font_size = 8
+theme_override_font_sizes/font_size = 6
 text = "Process Time"
 horizontal_alignment = 2
 vertical_alignment = 1
@@ -96,13 +100,13 @@ vertical_alignment = 1
 [node name="TimeProcessValue" type="Label" parent="GridContainer"]
 layout_mode = 2
 theme = ExtResource("2_cpcep")
-theme_override_font_sizes/font_size = 8
+theme_override_font_sizes/font_size = 6
 vertical_alignment = 1
 
 [node name="TimePhysicsProcessLabel" type="Label" parent="GridContainer"]
 layout_mode = 2
 theme = ExtResource("2_cpcep")
-theme_override_font_sizes/font_size = 8
+theme_override_font_sizes/font_size = 6
 text = "Physics Time"
 horizontal_alignment = 2
 vertical_alignment = 1
@@ -110,5 +114,5 @@ vertical_alignment = 1
 [node name="TimePhysicsProcessValue" type="Label" parent="GridContainer"]
 layout_mode = 2
 theme = ExtResource("2_cpcep")
-theme_override_font_sizes/font_size = 8
+theme_override_font_sizes/font_size = 6
 vertical_alignment = 1

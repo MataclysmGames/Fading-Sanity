@@ -24,15 +24,16 @@ layer_2/tile_data = PackedInt32Array(458752, 262145, 0, 458754, 262145, 0, 45875
 
 [node name="ParallaxBackground" parent="." instance=ExtResource("4_vaj8p")]
 
-[node name="Transition Trigger" parent="." instance=ExtResource("5_2i6wh")]
-position = Vector2(1792, 384)
-scale = Vector2(1, 2)
-scene_to_load = "res://scenes/levels/home.tscn"
-
 [node name="Rain" parent="." instance=ExtResource("6_40p8c")]
 position = Vector2(928, -288)
 lifetime = 4.0
 emission_rect_extents = Vector2(900, 10)
+
+[node name="Home Transition Trigger" parent="." instance=ExtResource("5_2i6wh")]
+position = Vector2(1792, 384)
+scale = Vector2(1, 2)
+scene_to_load = "res://scenes/levels/home.tscn"
+player_load_position = Vector2(33, 211)
 
 [node name="FlyingBug" parent="." instance=ExtResource("7_lculc")]
 position = Vector2(1248, 64)

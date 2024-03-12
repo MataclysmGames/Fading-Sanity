@@ -18,7 +18,7 @@ const one_shot_animations : Array[String] = ["disintegrate", "jump", "land", "de
 @onready var camera_target : RemoteTransform2D = $CameraTarget
 @onready var attack_aim : Node2D = $AttackAim
 @onready var hit_box : Area2D = $AttackAim/HitBox
-@onready var attack_sprite : Sprite2D = $AttackAim/HitBox/CollisionShape2D/Sprite2D
+@onready var attack_animated_sprite : AnimatedSprite2D = $AttackAim/HitBox/CollisionShape2D/AttackAnimatedSprite
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity : float = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -32,9 +32,10 @@ var has_jumped : bool = false
 var on_ground : bool = true
 var has_been_on_ground : bool = false
 var has_i_frames : bool = false
+var can_attack : bool = true
 
 # Player stats
-var attack_damage : float = 24.9
+@export var attack_damage : float = 25
 var total_exp : float = 0.0
 
 # Camera target
@@ -49,6 +50,7 @@ var one_shot_animation_playing : bool = false
 func _ready() -> void:
 	last_velocity_x_list.resize(target_list_size)
 	sprite.animation_finished.connect(on_animation_finished)
+	attack_animated_sprite.animation_finished.connect(on_attack_animation_finished)
 	
 	var load_position : Vector2 = PlayerLoadInfo.consume_load_position()
 	if load_position:
@@ -81,21 +83,19 @@ func _process(delta: float) -> void:
 		ScreenShader.set_aberration(clampf(x_dist / 4000.0, -0.05, 0.05))
 
 func _input(event: InputEvent) -> void:
-	if can_handle_user_input and event.is_action_pressed("escape"):
+	if event.is_action_pressed("escape"):
 		PauseMenu.toggle_pause(self)
-	if event is InputEventMouseButton and can_handle_user_input:
-		if (event as InputEventMouseButton).pressed:
-			if event.button_index == MOUSE_BUTTON_LEFT:
-				handle_attack()
-			elif event.button_index == MOUSE_BUTTON_RIGHT:
-				pass
-		
+	if can_handle_user_input and event.is_action_pressed("attack"):
+		handle_attack()
+
 func handle_attack():
+	if not can_attack:
+		return
+
+	can_attack = false
+	attack_animated_sprite.play()
+	
 	var hit_something : bool = false
-	var attack_tween : Tween = create_tween()
-	attack_tween.tween_callback(attack_sprite.show)
-	attack_tween.tween_interval(0.1)
-	attack_tween.tween_callback(attack_sprite.hide)
 	for body in hit_box.get_overlapping_bodies():
 		if body is GenericEnemy:
 			hit_something = true
@@ -105,8 +105,23 @@ func handle_attack():
 	print(hit_something)
 
 func handle_aim():
-	var global_mouse_pos : Vector2 = get_global_mouse_position()
-	attack_aim.rotation = attack_aim.global_position.angle_to_point(global_mouse_pos)
+	if not can_attack:
+		return
+		
+	var direction : Vector2 = Input.get_vector("left", "right", "up", "down")
+	if abs(direction.y) > abs(direction.x):
+		# attacking up or down
+		if direction.y > 0:
+			attack_aim.rotation_degrees = 90
+		else:
+			attack_aim.rotation_degrees = -90
+	else:
+		if direction.x == 0:
+			direction.x = -1 if sprite.flip_h else 1
+		if direction.x < 0:
+			attack_aim.rotation_degrees = 180
+		else:
+			attack_aim.rotation_degrees = 0
 
 func handle_gravity(delta : float):
 	if is_on_floor():
@@ -134,7 +149,7 @@ func handle_jump():
 			update_animation("jump", true)
 
 func handle_horizontal_movement(delta):
-	var direction = Input.get_axis("left", "right")
+	var direction : float = Input.get_axis("left", "right")
 	if direction:
 		velocity.x = move_toward(velocity.x, direction * SPEED, delta * SPEED * 15)
 	elif is_on_floor():
@@ -160,7 +175,6 @@ func update_animation(animation_name : String, force_restart : bool = false, pla
 	if not is_alive:
 		return
 	if force_restart or sprite.animation != animation_name and not one_shot_animation_playing:
-		#print(animation_name)
 		if play_backwards:
 			sprite.play_backwards(animation_name)
 		else:
@@ -173,6 +187,9 @@ func on_animation_finished():
 		one_shot_animation_playing = false
 	if sprite.animation == "death" and is_alive:
 		can_handle_user_input = true
+
+func on_attack_animation_finished():
+	can_attack = true
 
 func death():
 	if is_on_floor():

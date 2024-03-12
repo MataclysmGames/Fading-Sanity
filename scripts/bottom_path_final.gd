@@ -16,7 +16,7 @@ func _process(delta: float) -> void:
 		if all_enemies_dead():
 			boss_is_dead = true
 			handle_boss_death()
-			
+
 func all_enemies_dead() -> bool:
 	var children : Array[Node] = get_children()
 	for child in children:

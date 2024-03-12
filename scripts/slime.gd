@@ -34,7 +34,7 @@ func on_timer():
 
 func jump():
 	rotation_index = rotation_index + rotation_delta
-	if abs(rotation_index) >= 3:
+	if abs(rotation_index) >= 2:
 		rotation_delta *= -1
 	var next_rotation : float = rotation_index * 90
 	var tween : Tween = create_tween()
@@ -69,11 +69,13 @@ func split():
 		slime_split_2.max_health = max_health / 2
 		slime_split_1.jump_velocity = jump_velocity / 2
 		slime_split_2.jump_velocity = jump_velocity / 2
+		slime_split_1.detection_radius = detection_radius
+		slime_split_2.detection_radius = detection_radius
 		get_parent().add_child(slime_split_1)
 		get_parent().add_child(slime_split_2)
 
 func on_hurtbox_entered(body : Node2D):
-	if body is Player:
+	if body is Player and is_alive:
 		var player := body as Player
 		var knockback_direction : Vector2 = sprite.global_position.direction_to(body.global_position).normalized()
 		knockback_direction.y = clampf(knockback_direction.y, -0.4, -1.0)

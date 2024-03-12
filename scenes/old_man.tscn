@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://c80w2htwd327w"]
+[gd_scene load_steps=8 format=3 uid="uid://c80w2htwd327w"]
 
 [ext_resource type="Script" path="res://scripts/old_man.gd" id="1_aly8s"]
 [ext_resource type="Texture2D" uid="uid://do5u46nawvlbp" path="res://assets/old-man.png" id="2_eqkta"]
+[ext_resource type="PackedScene" uid="uid://denj32nabvvcn" path="res://scenes/dialogue_box.tscn" id="3_gyyq7"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_14nd4"]
 atlas = ExtResource("2_eqkta")
@@ -39,3 +40,6 @@ frame_progress = 0.43398
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 16)
 shape = SubResource("RectangleShape2D_hpnx6")
+
+[node name="DialogueBox" parent="." instance=ExtResource("3_gyyq7")]
+position = Vector2(-60, -41)

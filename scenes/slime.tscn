@@ -19,10 +19,10 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o60wx"]
-size = Vector2(28, 30)
+size = Vector2(26, 29)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l0b2j"]
-size = Vector2(30, 32)
+size = Vector2(26, 29)
 
 [sub_resource type="Gradient" id="Gradient_q5vo1"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
@@ -42,13 +42,13 @@ detection_radius = 128.0
 sprite_frames = SubResource("SpriteFrames_rhc0p")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 1)
+position = Vector2(0, 1.5)
 shape = SubResource("RectangleShape2D_o60wx")
 
 [node name="HurtBox" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
-position = Vector2(0, 1)
+position = Vector2(0, 1.5)
 shape = SubResource("RectangleShape2D_l0b2j")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]

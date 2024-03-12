@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://lrus50w123w"]
+
+[ext_resource type="Texture2D" uid="uid://c7nid7qocud4d" path="res://assets/crystal.png" id="1_4366y"]
+[ext_resource type="Script" path="res://scripts/crystal.gd" id="2_pwhb4"]
+[ext_resource type="Texture2D" uid="uid://b5ojbuhcpnr05" path="res://resources/point_light_64.tres" id="3_wmrd6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f7tct"]
+size = Vector2(32, 32)
+
+[node name="Crystal" type="Sprite2D"]
+texture = ExtResource("1_4366y")
+script = ExtResource("2_pwhb4")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+amount = 32
+preprocess = 2.0
+emission_shape = 1
+emission_sphere_radius = 16.0
+direction = Vector2(0, -1)
+spread = 90.0
+gravity = Vector2(0, 0)
+initial_velocity_max = 10.0
+angular_velocity_max = 2.0
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_f7tct")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+blend_mode = 2
+texture = ExtResource("3_wmrd6")

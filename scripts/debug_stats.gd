@@ -22,7 +22,8 @@ func settings_updated(resource : SaveDataResource):
 	visible = resource.show_debug_stats
 
 func update_labels():
-	var resolution : Vector2i = DisplayServer.screen_get_size()
+	#var resolution : Vector2i = DisplayServer.screen_get_size()
+	var resolution : Vector2i = get_window().size
 	fps_value.text = "%d" % Engine.get_frames_per_second()
 	resolution_value.text = "%dx%d" % [resolution.x, resolution.y]
 	object_count_value.text = "%d" % Performance.get_monitor(Performance.OBJECT_COUNT)

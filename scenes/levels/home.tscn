@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b8xiefdovmwnd"]
+[gd_scene load_steps=12 format=3 uid="uid://b8xiefdovmwnd"]
 
 [ext_resource type="Script" path="res://scripts/home.gd" id="1_kcphs"]
 [ext_resource type="PackedScene" uid="uid://ka75h4icbjdj" path="res://scenes/player.tscn" id="2_x7odt"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://vnk5m6pakuhy" path="res://scenes/rain.tscn" id="7_28obc"]
 [ext_resource type="Texture2D" uid="uid://cfnhoug0428gg" path="res://assets/house.png" id="8_8k4eu"]
 [ext_resource type="PackedScene" uid="uid://c80w2htwd327w" path="res://scenes/old_man.tscn" id="9_gl3qd"]
+[ext_resource type="PackedScene" uid="uid://c07w3rth8ynm2" path="res://scenes/torch.tscn" id="11_mpp4o"]
 
 [node name="Home" type="Node2D"]
 script = ExtResource("1_kcphs")
@@ -77,3 +78,13 @@ exp_given = 1500.0
 detection_radius = 9999.0
 stun_duration = 0.0
 knockback_strength = 0.0
+
+[node name="Torch" parent="." instance=ExtResource("11_mpp4o")]
+position = Vector2(1649, 289)
+
+[node name="Torch2" parent="." instance=ExtResource("11_mpp4o")]
+position = Vector2(1374, 67)
+
+[node name="Torch3" parent="." instance=ExtResource("11_mpp4o")]
+position = Vector2(1023, 410)
+rotation = 1.55415

@@ -51,3 +51,21 @@ func update_current_scene(file_path : String):
 func get_last_scene() -> String:
 	return save_resource.player.last_scene_loaded
 	
+func obtain_crystal(crystal_name : Crystal.CRYSTAL_NAME):
+	match crystal_name:
+		Crystal.CRYSTAL_NAME.SLIME:
+			save_resource.player.has_slime_crystal = true
+		Crystal.CRYSTAL_NAME.GRAVITY:
+			save_resource.player.has_gravity_crystal = true
+		Crystal.CRYSTAL_NAME.IDENTITY:
+			save_resource.player.has_identity_crystal = true
+
+func has_crystal(crystal_name : Crystal.CRYSTAL_NAME):
+	match crystal_name:
+		Crystal.CRYSTAL_NAME.SLIME:
+			return save_resource.player.has_slime_crystal
+		Crystal.CRYSTAL_NAME.GRAVITY:
+			return save_resource.player.has_gravity_crystal
+		Crystal.CRYSTAL_NAME.IDENTITY:
+			return save_resource.player.has_identity_crystal
+	return false

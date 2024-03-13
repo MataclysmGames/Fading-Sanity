@@ -1,9 +1,9 @@
 class_name Crystal
 extends Sprite2D
 
-enum CRYSTAL_NAME {SLIME_KING, BOSS_B, BOSS_C}
+enum CRYSTAL_NAME {SLIME, GRAVITY, IDENTITY}
 
-@export var crystal_name : CRYSTAL_NAME = CRYSTAL_NAME.SLIME_KING
+@export var crystal_name : CRYSTAL_NAME = CRYSTAL_NAME.SLIME
 
 @onready var area_2d : Area2D = $Area2D
 @onready var point_light_2d : PointLight2D = $PointLight2D
@@ -14,9 +14,11 @@ func _ready() -> void:
 func on_body_entered(body : Node2D):
 	if body is Player:
 		var player := body as Player
-		print("Player obtained %s" % [str(crystal_name)])
-		player.can_handle_user_input = false
+		player.disable_input_allow_gravity()
+		
+		SaveData.obtain_crystal(crystal_name)
+		
 		var tween : Tween = create_tween()
-		#tween.tween_property(point_light_2d, "scale", Vector2(20, 20), 3)
-		tween.tween_property(point_light_2d, "energy", 20, 3)
-		tween.tween_callback(func(): SceneLoader.flashbang_fade_in_scene("res://scenes/levels/home.tscn"))
+		tween.tween_property(point_light_2d, "scale", Vector2(1.5, 1.5), 3)
+		tween.parallel().tween_property(point_light_2d, "energy", 4, 3)
+		tween.tween_callback(func(): SceneLoader.fade_in_scene("res://scenes/levels/home.tscn"))

@@ -6,9 +6,9 @@ extends Resource
 
 # Settings
 @export var audio_bus_volumes : Dictionary = {
-	"Master": 0.5,
-	"Music": 0.9,
-	"SFX": 0.8,
+	"Master": 1.0,
+	"Music": 1.0,
+	"SFX": 1.0,
 	"Ambient": 1.0
 }
 @export var allow_aberration : bool = false

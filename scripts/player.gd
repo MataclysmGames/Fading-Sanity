@@ -33,9 +33,10 @@ var on_ground : bool = true
 var has_been_on_ground : bool = false
 var has_i_frames : bool = false
 var can_attack : bool = true
+var gravity_vector : Vector2 = Vector2(0, 1)
 
 # Player stats
-@export var attack_damage : float = 25
+@export var attack_damage : float = 25.1
 var total_exp : float = 0.0
 
 # Camera target
@@ -67,12 +68,12 @@ func _ready() -> void:
 	SaveData.update_current_scene(current_scene_file)
 
 func _physics_process(delta):
-	handle_gravity(delta)
 	if is_alive and can_handle_user_input:
 		handle_aim()
 		handle_jump()
-		handle_horizontal_movement(delta)
+		handle_directional_movement(delta)
 		handle_camera_target()
+	handle_gravity(delta)
 	if (is_alive and can_handle_user_input) or not has_been_on_ground:
 		move_and_slide()
 
@@ -87,6 +88,28 @@ func _input(event: InputEvent) -> void:
 		PauseMenu.toggle_pause(self)
 	if can_handle_user_input and event.is_action_pressed("attack"):
 		handle_attack()
+
+func disable_input_allow_gravity():
+	velocity.x = 0
+	can_handle_user_input = false
+	has_been_on_ground = false
+
+func enable_input():
+	can_handle_user_input = true
+	
+func set_gravity_vector(vec : Vector2):
+	gravity_vector = vec
+	up_direction = gravity_vector * -1
+	if gravity_vector.y < 0:
+		sprite.flip_v = true
+	else:
+		sprite.flip_v = false
+	if gravity_vector.x > 0:
+		rotation_degrees = -90
+	elif gravity_vector.x < 0:
+		rotation_degrees = 90
+	else:
+		rotation_degrees = 0
 
 func handle_attack():
 	if not can_attack:
@@ -103,12 +126,19 @@ func handle_attack():
 			knockback_direction.y = clampf(knockback_direction.y, -0.4, -1.0)
 			(body as GenericEnemy).take_damage(attack_damage, knockback_direction, self)
 	print(hit_something)
+	
+func get_input_direction() -> Vector2:
+	if gravity_vector.x > 0 and gravity_vector.y == 0:
+		return Input.get_vector("up", "down", "right", "left")
+	elif gravity_vector.x < 0 and gravity_vector.y == 0:
+		return Input.get_vector("up", "down", "left", "right")
+	return Input.get_vector("left", "right", "up", "down")
 
 func handle_aim():
 	if not can_attack:
 		return
 		
-	var direction : Vector2 = Input.get_vector("left", "right", "up", "down")
+	var direction : Vector2 = get_input_direction()
 	if abs(direction.y) > abs(direction.x):
 		# attacking up or down
 		if direction.y > 0:
@@ -135,8 +165,8 @@ func handle_gravity(delta : float):
 		var fall_factor = 0.6 if Input.is_action_pressed("jump") else 1.2
 		if velocity.y < 0: # going up
 			fall_factor *= 0.75
-		velocity.y += gravity * fall_factor * delta
-		velocity.y = min(velocity.y, MAX_FALL_SPEED)
+		velocity += gravity * gravity_vector * fall_factor * delta
+		velocity.y = clampf(velocity.y, -MAX_FALL_SPEED, MAX_FALL_SPEED)
 		
 		if velocity.y > 0:
 			update_animation("fall")
@@ -144,31 +174,35 @@ func handle_gravity(delta : float):
 func handle_jump():
 	if Input.is_action_just_pressed("jump"):
 		if is_on_floor() or is_on_wall() or (not has_jumped and frames_since_grounded < COYOTE_FRAMES):
-			velocity.y = JUMP_VELOCITY
+			if gravity_vector.y != 0:
+				velocity.y = JUMP_VELOCITY / gravity_vector.y
+			elif gravity_vector.x != 0:
+				velocity.x = JUMP_VELOCITY / gravity_vector.x
 			has_jumped = true
 			update_animation("jump", true)
 
-func handle_horizontal_movement(delta):
-	var direction : float = Input.get_axis("left", "right")
-	if direction:
-		velocity.x = move_toward(velocity.x, direction * SPEED, delta * SPEED * 15)
-	elif is_on_floor():
-		velocity.x = move_toward(velocity.x, 0, delta * SPEED * 30)
+func handle_directional_movement(delta):
+	var direction : Vector2 = get_input_direction()
+	if gravity_vector.x != 0:
+		velocity.y = move_toward(velocity.y, direction.y * SPEED, SPEED * delta * 15)
 	else:
-		velocity.x = move_toward(velocity.x, 0, delta * SPEED * 15)
-	
+		velocity.x = move_toward(velocity.x, direction.x * SPEED, SPEED * delta * 15)
+
+	var horizontal_velocity : float = velocity.x if gravity_vector.y != 0 else velocity.y
 	if is_on_floor():
-		if velocity.x != 0:
-			if abs(velocity.x) > SPEED / 2:
+		if horizontal_velocity != 0:
+			if abs(horizontal_velocity) > SPEED / 2:
 				update_animation("run")
 			else:
 				update_animation("walk")
 		else:
 			update_animation("idle")
-
-	if velocity.x < 0:
+	
+	if gravity_vector.x > 0:
+		horizontal_velocity *= -1
+	if horizontal_velocity < 0:
 		sprite.flip_h = true
-	elif velocity.x > 0:
+	elif horizontal_velocity > 0:
 		sprite.flip_h = false
 
 func update_animation(animation_name : String, force_restart : bool = false, play_backwards : bool = false):
@@ -221,8 +255,8 @@ func handle_camera_target():
 		camera_target.position.x = move_toward(camera_target.position.x, x_lead, 0.5)
 
 	if is_on_floor():
-		var look_up_down_direction = Input.get_axis("up", "down")
-		camera_target.position.y = move_toward(camera_target.position.y, look_up_down_direction * 50, 1.5)
+		var look_direction : Vector2 = get_input_direction()
+		camera_target.position.y = move_toward(camera_target.position.y, look_direction.y * 50, 1.5)
 
 func avg(list : Array[float]) -> float:
 	var total : float = 0.0

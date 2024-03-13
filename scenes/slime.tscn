@@ -22,7 +22,7 @@ animations = [{
 size = Vector2(26, 29)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l0b2j"]
-size = Vector2(26, 29)
+size = Vector2(28, 31)
 
 [sub_resource type="Gradient" id="Gradient_q5vo1"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)

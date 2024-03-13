@@ -1,7 +1,7 @@
 [gd_resource type="FastNoiseLite" format=3 uid="uid://cf46kn7x0olqp"]
 
 [resource]
-seed = 327
-frequency = 0.0048
+seed = 326
+frequency = 0.0046
 fractal_type = 2
 fractal_gain = 0.8

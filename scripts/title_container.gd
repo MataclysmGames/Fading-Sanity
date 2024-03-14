@@ -34,6 +34,7 @@ func on_continue():
 		last_scene = "res://scenes/levels/home.tscn"
 	continue_button.release_focus()
 	BackgroundAudio.play_bell()
+	PlayerLoadInfo.load_animation = "death"
 	SceneLoader.fade_in_scene(last_scene, 3.4, 1.0)
 
 func on_exit():

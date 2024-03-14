@@ -23,15 +23,18 @@ camera_limit_bottom = 352
 [node name="Gravity Zone" parent="." instance=ExtResource("4_ws7cw")]
 position = Vector2(72, 159)
 scale = Vector2(0.75, 1)
+color_particles = false
 
 [node name="Gravity Zone2" parent="." instance=ExtResource("4_ws7cw")]
 position = Vector2(351, 160)
 scale = Vector2(1.25, 0.98)
 gravity_vector = Vector2(0, -1)
+color_particles = false
 
 [node name="Gravity Zone3" parent="." instance=ExtResource("4_ws7cw")]
 position = Vector2(637, 160)
 scale = Vector2(0.75, 1)
+color_particles = false
 
 [node name="Transition Trigger" parent="." instance=ExtResource("5_rg670")]
 position = Vector2(-48, 160)

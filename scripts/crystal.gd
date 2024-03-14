@@ -1,6 +1,8 @@
 class_name Crystal
 extends Sprite2D
 
+signal obtained()
+
 enum CRYSTAL_NAME {SLIME, GRAVITY, IDENTITY}
 
 @export var crystal_name : CRYSTAL_NAME = CRYSTAL_NAME.SLIME
@@ -15,7 +17,7 @@ func on_body_entered(body : Node2D):
 	if body is Player:
 		var player := body as Player
 		player.disable_input_allow_gravity()
-		
+		obtained.emit()
 		SaveData.obtain_crystal(crystal_name)
 		
 		var tween : Tween = create_tween()

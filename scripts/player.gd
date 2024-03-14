@@ -20,6 +20,9 @@ const one_shot_animations : Array[String] = ["disintegrate", "jump", "land", "de
 @onready var hit_box : Area2D = $AttackAim/HitBox
 @onready var attack_animated_sprite : AnimatedSprite2D = $AttackAim/HitBox/CollisionShape2D/AttackAnimatedSprite
 
+@onready var hud : CanvasLayer = $HUD
+@onready var health_progress_bar : ProgressBar = $HUD/OuterMargin/InnerMargin/HealthProgressBar
+
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity : float = ProjectSettings.get_setting("physics/2d/default_gravity")
 
@@ -29,14 +32,17 @@ var is_alive : bool = true
 var can_handle_user_input : bool = true
 var frames_since_grounded = 0
 var has_jumped : bool = false
+var has_double_jumped : bool = false
 var on_ground : bool = true
 var has_been_on_ground : bool = false
 var has_i_frames : bool = false
 var can_attack : bool = true
+var can_pause : bool = true
 var gravity_vector : Vector2 = Vector2(0, 1)
 
 # Player stats
 @export var attack_damage : float = 25.1
+@export var hud_visible : bool = false
 var total_exp : float = 0.0
 
 # Camera target
@@ -66,14 +72,18 @@ func _ready() -> void:
 	
 	var current_scene_file : String = get_tree().current_scene.scene_file_path
 	SaveData.update_current_scene(current_scene_file)
+	
+	health_progress_bar.value = health
+	hud.visible = hud_visible
 
 func _physics_process(delta):
 	if is_alive and can_handle_user_input:
 		handle_aim()
 		handle_jump()
-		handle_directional_movement(delta)
 		handle_camera_target()
+		handle_directional_movement(delta)
 	handle_gravity(delta)
+	handle_animation()
 	if (is_alive and can_handle_user_input) or not has_been_on_ground:
 		move_and_slide()
 
@@ -84,7 +94,7 @@ func _process(delta: float) -> void:
 		ScreenShader.set_aberration(clampf(x_dist / 4000.0, -0.05, 0.05))
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("escape"):
+	if can_pause and event.is_action_pressed("escape"):
 		PauseMenu.toggle_pause(self)
 	if can_handle_user_input and event.is_action_pressed("attack"):
 		handle_attack()
@@ -92,10 +102,12 @@ func _input(event: InputEvent) -> void:
 func disable_input_allow_gravity():
 	velocity.x = 0
 	can_handle_user_input = false
+	can_pause = false
 	has_been_on_ground = false
 
 func enable_input():
 	can_handle_user_input = true
+	can_pause = true
 	
 func set_gravity_vector(vec : Vector2):
 	gravity_vector = vec
@@ -162,9 +174,10 @@ func handle_gravity(delta : float):
 		frames_since_grounded = 0
 	else:
 		frames_since_grounded += 1
-		var fall_factor = 0.6 if Input.is_action_pressed("jump") else 1.2
+		var fall_factor = 0.5 if Input.is_action_pressed("jump") else 1.0
 		if velocity.y < 0: # going up
-			fall_factor *= 0.75
+			#fall_factor *= 0.75
+			pass
 		velocity += gravity * gravity_vector * fall_factor * delta
 		velocity.y = clampf(velocity.y, -MAX_FALL_SPEED, MAX_FALL_SPEED)
 		
@@ -173,7 +186,7 @@ func handle_gravity(delta : float):
 
 func handle_jump():
 	if Input.is_action_just_pressed("jump"):
-		if is_on_floor() or is_on_wall() or (not has_jumped and frames_since_grounded < COYOTE_FRAMES):
+		if is_on_floor() or (not has_jumped and frames_since_grounded < COYOTE_FRAMES):
 			if gravity_vector.y != 0:
 				velocity.y = JUMP_VELOCITY / gravity_vector.y
 			elif gravity_vector.x != 0:
@@ -188,6 +201,7 @@ func handle_directional_movement(delta):
 	else:
 		velocity.x = move_toward(velocity.x, direction.x * SPEED, SPEED * delta * 15)
 
+func handle_animation():
 	var horizontal_velocity : float = velocity.x if gravity_vector.y != 0 else velocity.y
 	if is_on_floor():
 		if horizontal_velocity != 0:
@@ -274,7 +288,8 @@ func take_damage(amount : float, knockback_direction : Vector2):
 	
 	has_i_frames = true
 	health -= amount
-	print("Player has %d health." % [health])
+	var health_tween : Tween = create_tween()
+	health_tween.tween_property(health_progress_bar, "value", health, 0.4)
 	velocity = knockback_direction * 300
 	
 	var hit_tween : Tween = create_tween()

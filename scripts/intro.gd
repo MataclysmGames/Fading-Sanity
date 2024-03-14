@@ -5,7 +5,7 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	MoodLighting.show()
+	MoodLighting.prepare_for_scene()
 	BackgroundAudio.play_forest_ambience()
 	BackgroundAudio.play_forest_music(0.65)
 	background.set_fog_speed(0.04)

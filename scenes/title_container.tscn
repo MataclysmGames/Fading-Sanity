@@ -37,7 +37,9 @@ vertical_alignment = 1
 [node name="ContinueButton" parent="." instance=ExtResource("2_wmxxg")]
 custom_minimum_size = Vector2(0, 0)
 layout_mode = 2
+focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath(".")
+focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../NewGameButton")
 focus_next = NodePath("../NewGameButton")
 focus_previous = NodePath(".")
@@ -46,7 +48,9 @@ text = "Continue"
 [node name="NewGameButton" parent="." instance=ExtResource("2_wmxxg")]
 custom_minimum_size = Vector2(0, 0)
 layout_mode = 2
+focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../ContinueButton")
+focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../SettingsButton")
 focus_next = NodePath("../SettingsButton")
 focus_previous = NodePath("../ContinueButton")
@@ -55,7 +59,9 @@ text = "New Game"
 [node name="SettingsButton" parent="." instance=ExtResource("2_wmxxg")]
 custom_minimum_size = Vector2(0, 0)
 layout_mode = 2
+focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../NewGameButton")
+focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../ExitButton")
 focus_next = NodePath("../ExitButton")
 focus_previous = NodePath("../NewGameButton")
@@ -64,7 +70,9 @@ text = "Settings"
 [node name="ExitButton" parent="." instance=ExtResource("2_wmxxg")]
 custom_minimum_size = Vector2(0, 0)
 layout_mode = 2
+focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../SettingsButton")
+focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath(".")
 focus_next = NodePath(".")
 focus_previous = NodePath("../SettingsButton")

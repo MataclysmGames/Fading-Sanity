@@ -4,7 +4,7 @@ extends Node2D
 @onready var background : BackgroundWithFog = $ParallaxBackground
 
 func _ready() -> void:
-	MoodLighting.show()
+	MoodLighting.prepare_for_scene()
 	BackgroundAudio.play_whispers_ambience(-20, 0.6)
 	BackgroundAudio.play_forest_music(0.65, 2.0)
 	background.set_fog_speed(0.1)

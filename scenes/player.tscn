@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://ka75h4icbjdj"]
+[gd_scene load_steps=63 format=3 uid="uid://ka75h4icbjdj"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_7jqql"]
 [ext_resource type="Texture2D" uid="uid://chyow3s5gcln0" path="res://assets/character.png" id="2_2mh5u"]
@@ -433,6 +433,11 @@ animations = [{
 "speed": 24.0
 }]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tl0u0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sksyk"]
+bg_color = Color(0.996078, 0, 0, 1)
+
 [node name="Player" type="CharacterBody2D"]
 z_index = 2
 script = ExtResource("1_7jqql")
@@ -503,3 +508,34 @@ sprite_frames = SubResource("SpriteFrames_e8m0m")
 animation = &"attack"
 frame = 5
 frame_progress = 1.0
+
+[node name="HUD" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="OuterMargin" type="MarginContainer" parent="HUD"]
+offset_right = 84.0
+offset_bottom = 12.0
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="ColorRect" type="ColorRect" parent="HUD/OuterMargin"]
+layout_mode = 2
+color = Color(0.407843, 0.407843, 0, 1)
+
+[node name="InnerMargin" type="MarginContainer" parent="HUD/OuterMargin"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="HealthProgressBar" type="ProgressBar" parent="HUD/OuterMargin/InnerMargin"]
+custom_minimum_size = Vector2(80, 8)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_tl0u0")
+theme_override_styles/fill = SubResource("StyleBoxFlat_sksyk")
+step = 1.0
+value = 100.0
+show_percentage = false

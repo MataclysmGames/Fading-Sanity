@@ -247,7 +247,7 @@ theme_override_styles/pressed = SubResource("StyleBoxEmpty_45lem")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_1irnm")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_j0pxa")
 theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_dkmup")
-button_pressed = true
+disabled = true
 flat = true
 
 [node name="AllowPixelationLabel" type="Label" parent="GridContainer2"]
@@ -273,6 +273,7 @@ theme_override_styles/pressed = SubResource("StyleBoxEmpty_45lem")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_1irnm")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_j0pxa")
 theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_dkmup")
+disabled = true
 flat = true
 
 [node name="ShowDebugLabel" type="Label" parent="GridContainer2"]

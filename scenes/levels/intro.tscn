@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://c01fg034jj0rm"]
+[gd_scene load_steps=9 format=3 uid="uid://c01fg034jj0rm"]
 
 [ext_resource type="Script" path="res://scripts/intro.gd" id="1_m7spx"]
 [ext_resource type="PackedScene" uid="uid://ka75h4icbjdj" path="res://scenes/player.tscn" id="2_4lgdw"]
@@ -6,10 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://bp211kt1oio2s" path="res://scenes/parallax_background.tscn" id="4_vaj8p"]
 [ext_resource type="PackedScene" uid="uid://boyiju7b6r12g" path="res://scenes/transition_trigger.tscn" id="5_2i6wh"]
 [ext_resource type="PackedScene" uid="uid://vnk5m6pakuhy" path="res://scenes/rain.tscn" id="6_40p8c"]
-[ext_resource type="PackedScene" uid="uid://deyu6ian7y4lj" path="res://scenes/flying_bug.tscn" id="7_lculc"]
 [ext_resource type="PackedScene" uid="uid://b8in2vvbmmaou" path="res://scenes/gravity_zone.tscn" id="8_x8pwl"]
 [ext_resource type="Script" path="res://scripts/rain.gd" id="9_ru1pi"]
-[ext_resource type="Theme" uid="uid://c1vjx2e8rdafi" path="res://resources/font_light.tres" id="10_8xio7"]
 
 [node name="Intro" type="Node2D"]
 script = ExtResource("1_m7spx")
@@ -33,10 +31,6 @@ scale = Vector2(1, 2)
 scene_to_load = "res://scenes/levels/home.tscn"
 player_load_position = Vector2(33, 211)
 
-[node name="FlyingBug" parent="." instance=ExtResource("7_lculc")]
-position = Vector2(1248, 64)
-detection_radius = 200.0
-
 [node name="Gravity Zone" parent="." instance=ExtResource("8_x8pwl")]
 visible = false
 position = Vector2(888, 128)
@@ -51,12 +45,3 @@ lifetime = 5.0
 preprocess = 5.0
 emission_rect_extents = Vector2(880, 10)
 script = ExtResource("9_ru1pi")
-
-[node name="MovementLabel" type="Label" parent="."]
-light_mask = 2
-offset_left = 174.0
-offset_top = 237.0
-offset_right = 347.0
-offset_bottom = 260.0
-theme = ExtResource("10_8xio7")
-text = "Hold Jump to jump higher"

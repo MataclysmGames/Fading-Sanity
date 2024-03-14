@@ -23,6 +23,13 @@ const one_shot_animations : Array[String] = ["disintegrate", "jump", "land", "de
 @onready var hud : CanvasLayer = $HUD
 @onready var health_progress_bar : ProgressBar = $HUD/OuterMargin/InnerMargin/HealthProgressBar
 
+@onready var attack_audio_player: AudioStreamPlayer = $AttackAudioPlayer
+
+@onready var general_light : PointLight2D = $GeneralLight
+@onready var precise_light : PointLight2D = $PreciseLight
+
+var attack_audio : AudioStream = load("res://external_assets/Kenney/woosh1.ogg")
+
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity : float = ProjectSettings.get_setting("physics/2d/default_gravity")
 
@@ -39,6 +46,7 @@ var has_i_frames : bool = false
 var can_attack : bool = true
 var can_pause : bool = true
 var gravity_vector : Vector2 = Vector2(0, 1)
+var auto_controlled : bool = false
 
 # Player stats
 @export var attack_damage : float = 25.1
@@ -84,7 +92,7 @@ func _physics_process(delta):
 		handle_directional_movement(delta)
 	handle_gravity(delta)
 	handle_animation()
-	if (is_alive and can_handle_user_input) or not has_been_on_ground:
+	if (is_alive and can_handle_user_input) or not has_been_on_ground or auto_controlled:
 		move_and_slide()
 
 func _process(delta: float) -> void:
@@ -137,7 +145,17 @@ func handle_attack():
 			var knockback_direction = sprite.global_position.direction_to(body.global_position).normalized()
 			knockback_direction.y = clampf(knockback_direction.y, -0.4, -1.0)
 			(body as GenericEnemy).take_damage(attack_damage, knockback_direction, self)
-	print(hit_something)
+	
+	if hit_something or true:
+		attack_audio_player.volume_db = -16
+		attack_audio_player.pitch_scale = randf_range(0.9, 1.1)
+		attack_audio_player.stream = attack_audio
+		attack_audio_player.play()
+
+func run(direction : Vector2):
+	auto_controlled = true
+	velocity = direction
+	BackgroundAudio.footstep_player.stop()
 	
 func get_input_direction() -> Vector2:
 	if gravity_vector.x > 0 and gravity_vector.y == 0:
@@ -169,6 +187,7 @@ func handle_gravity(delta : float):
 	if is_on_floor():
 		has_been_on_ground = true
 		if sprite.animation == "fall":
+			BackgroundAudio.play_random_footstep(12, true)
 			update_animation("land")
 		has_jumped = false
 		frames_since_grounded = 0
@@ -193,9 +212,12 @@ func handle_jump():
 				velocity.x = JUMP_VELOCITY / gravity_vector.x
 			has_jumped = true
 			update_animation("jump", true)
+			BackgroundAudio.play_random_footstep(12, true)
 
 func handle_directional_movement(delta):
 	var direction : Vector2 = get_input_direction()
+	if direction and is_on_floor():
+		BackgroundAudio.play_random_footstep()
 	if gravity_vector.x != 0:
 		velocity.y = move_toward(velocity.y, direction.y * SPEED, SPEED * delta * 15)
 	else:
@@ -280,7 +302,6 @@ func avg(list : Array[float]) -> float:
 
 func give_exp(amount : float):
 	total_exp += amount
-	print("Now have %d exp" % total_exp)
 
 func take_damage(amount : float, knockback_direction : Vector2):
 	if has_i_frames:

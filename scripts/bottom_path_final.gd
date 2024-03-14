@@ -8,8 +8,9 @@ var boss_is_dead : bool = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	MoodLighting.prepare_for_scene()
-	BackgroundAudio.play_whispers_ambience(-30, 0.7)
-	BackgroundAudio.play_forest_music(1.25, 2.0)
+	BackgroundAudio.play_forest_ambience()
+	BackgroundAudio.play_whispers_ambience(-20)
+	BackgroundAudio.play_forest_music(1.5, 2.0)
 
 func _process(delta: float) -> void:
 	if not boss_is_dead and Engine.get_process_frames() % 15 == 0:
@@ -25,7 +26,7 @@ func all_enemies_dead() -> bool:
 	return true
 
 func handle_boss_death():
-	player.can_handle_user_input = false
+	player.disable_input_allow_gravity()
 	player.camera.limit_right = 1216
 	var scene_tween : Tween = create_tween()
 	scene_tween.tween_property(player.camera_target, "global_position", moveable_wall.global_position, 1.0)
@@ -33,4 +34,4 @@ func handle_boss_death():
 	scene_tween.tween_callback(moveable_wall.move)
 	scene_tween.tween_interval(moveable_wall.movement_duration + 0.5)
 	scene_tween.tween_property(player.camera_target, "global_position", player.global_position, 1.0)
-	scene_tween.tween_callback(func(): player.can_handle_user_input = true)
+	scene_tween.tween_callback(player.enable_input)

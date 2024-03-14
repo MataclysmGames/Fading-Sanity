@@ -12,8 +12,9 @@ var vector_index : int = 0
 
 func _ready() -> void:
 	MoodLighting.prepare_for_scene(0.8)
-	BackgroundAudio.play_whispers_ambience(-30, 0.7)
-	BackgroundAudio.play_forest_music(1.0, 2.0)
+	BackgroundAudio.play_forest_ambience()
+	BackgroundAudio.play_whispers_ambience(-20)
+	BackgroundAudio.play_forest_music(1.5, 2.0)
 	crystal.obtained.connect(on_crystal_obtained)
 	
 	gravity_zone_tween = create_tween()

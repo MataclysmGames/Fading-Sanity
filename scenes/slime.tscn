@@ -54,3 +54,6 @@ shape = SubResource("RectangleShape2D_l0b2j")
 [node name="PointLight2D" type="PointLight2D" parent="."]
 energy = 0.4
 texture = SubResource("GradientTexture2D_pn4cs")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+bus = &"SFX"

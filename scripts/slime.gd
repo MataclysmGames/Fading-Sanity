@@ -8,6 +8,9 @@ extends GenericEnemy
 @onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
 @onready var collision : CollisionShape2D = $CollisionShape2D
 @onready var hurt_box : Area2D = $HurtBox
+@onready var audio_player : AudioStreamPlayer2D = $AudioStreamPlayer2D
+
+var hit_audio : AudioStream = load("res://external_assets/Kenney/impactSoft_heavy_000.ogg")
 
 var timer : Timer = Timer.new()
 var rotation_index : int = 0
@@ -23,6 +26,7 @@ func _ready() -> void:
 	timer.start(0.35 + randf_range(0.00, 0.15))
 	
 	hurt_box.body_entered.connect(on_hurtbox_entered)
+	hit.connect(on_hit)
 
 func _process(_delta: float) -> void:
 	if not is_stunned:
@@ -80,3 +84,9 @@ func on_hurtbox_entered(body : Node2D):
 		var knockback_direction : Vector2 = sprite.global_position.direction_to(body.global_position).normalized()
 		knockback_direction.y = clampf(knockback_direction.y, -0.4, -1.0)
 		player.take_damage(25, knockback_direction)
+
+func on_hit():
+	audio_player.volume_db = -10
+	audio_player.pitch_scale = randf_range(0.8, 1.5)
+	audio_player.stream = hit_audio
+	audio_player.play()

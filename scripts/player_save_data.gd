@@ -16,3 +16,6 @@ func _init() -> void:
 @export var has_slime_crystal : bool = false
 @export var has_gravity_crystal : bool = false
 @export var has_identity_crystal : bool = false
+
+# State
+@export var has_opened_top_path : bool = false

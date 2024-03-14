@@ -69,3 +69,10 @@ func has_crystal(crystal_name : Crystal.CRYSTAL_NAME):
 		Crystal.CRYSTAL_NAME.IDENTITY:
 			return save_resource.player.has_identity_crystal
 	return false
+
+func open_top_path():
+	save_resource.player.has_opened_top_path = true
+	save_to_disk()
+
+func has_opened_top_path() -> bool:
+	return save_resource.player.has_opened_top_path

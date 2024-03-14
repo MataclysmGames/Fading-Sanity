@@ -1,4 +1,7 @@
+class_name OldMan
 extends GenericEnemy
+
+signal open_top_path()
 
 @onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
 @onready var dialogue_box : DialogueBox = $DialogueBox
@@ -19,7 +22,9 @@ func _process(_delta: float) -> void:
 			speak(player)
 
 func speak(player : Player):
-	if SaveData.has_crystal(Crystal.CRYSTAL_NAME.SLIME) and not SaveData.has_crystal(Crystal.CRYSTAL_NAME.GRAVITY):
+	if SaveData.has_opened_top_path():
+		top_path(player)
+	elif SaveData.has_crystal(Crystal.CRYSTAL_NAME.SLIME) and not SaveData.has_crystal(Crystal.CRYSTAL_NAME.GRAVITY):
 		slime_only(player)
 	elif SaveData.has_crystal(Crystal.CRYSTAL_NAME.GRAVITY) and not SaveData.has_crystal(Crystal.CRYSTAL_NAME.SLIME):
 		gravity_only(player)
@@ -92,6 +97,17 @@ func slime_and_gravity(player : Player):
 	tween.tween_callback(func(): dialogue_box.play_content("It is clear you are ready for the final encounter."))
 	tween.tween_interval(2.0)
 	tween.tween_callback(func(): dialogue_box.play_content("Brace yourself."))
+	tween.tween_interval(2.0)
+	tween.tween_callback(func(): dialogue_box.hide_content())
+	tween.tween_callback(func(): open_top_path.emit())
+
+func top_path(player : Player):
+	has_spoken = true
+	var tween : Tween = create_tween()
+	tween.tween_callback(player.disable_input_allow_gravity)
+	tween.tween_callback(func(): dialogue_box.play_content("Take the top path ahead."))
+	tween.tween_interval(2.0)
+	tween.tween_callback(func(): dialogue_box.play_content("Prove your worth."))
 	tween.tween_interval(2.0)
 	tween.tween_callback(func(): dialogue_box.hide_content())
 	tween.tween_callback(player.enable_input)

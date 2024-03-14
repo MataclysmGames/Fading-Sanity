@@ -539,3 +539,6 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_sksyk")
 step = 1.0
 value = 100.0
 show_percentage = false
+
+[node name="AttackAudioPlayer" type="AudioStreamPlayer" parent="."]
+bus = &"SFX"

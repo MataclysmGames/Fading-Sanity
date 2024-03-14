@@ -4,16 +4,37 @@ const reduced_volume_db : float = -20.0
 
 @onready var music_player : AudioStreamPlayer = $MusicPlayer
 @onready var ambience_player : AudioStreamPlayer = $AmbiencePlayer
+@onready var whispers_ambience_player : AudioStreamPlayer = $WhispersAmbiencePlayer
+@onready var voices_ambience_player : AudioStreamPlayer = $VoicesAmbiencePlayer
 @onready var sfx_player : AudioStreamPlayer = $SFXPlayer
+@onready var footstep_player : AudioStreamPlayer = $FootstepPlayer
 
 var main_theme : AudioStream = load("res://external_assets/Free Sound/xythe_loop.wav")
 var forest_music : AudioStream = load("res://external_assets/Free Sound/furbyguy_pno.wav")
 var bell : AudioStream = load("res://external_assets/Free Sound/church_bell.wav")
 var forest_leaves : AudioStream = load("res://external_assets/Free Sound/forest-leaves_loop.wav")
 var whispers : AudioStream = load("res://external_assets/Free Sound/whispers.mp3")
+var voices : AudioStream = load("res://external_assets/Free Sound/voices.mp3")
+
+var footstep_audios : Array[AudioStream] = [
+	load("res://external_assets/Kenney/footstep_grass_000.ogg"),
+	load("res://external_assets/Kenney/footstep_grass_001.ogg"),
+	load("res://external_assets/Kenney/footstep_grass_002.ogg"),
+	load("res://external_assets/Kenney/footstep_grass_003.ogg"),
+	load("res://external_assets/Kenney/footstep_grass_004.ogg")
+]
 
 func _ready():
 	pass
+
+func play_random_footstep(extra_volume : float = 0.0, force : bool = false):
+	if not footstep_player.playing or force:
+		var volume : float = randf_range(reduced_volume_db - 15, reduced_volume_db - 12) + extra_volume
+		var pitch : float = 1.0 if force else randf_range(0.6, 1.0)
+		play_audio(footstep_player, footstep_audios.pick_random(), volume, pitch, 0.0)
+
+func play_voices_ambience(volume : float = reduced_volume_db, pitch : float = 0.5, transition_duration : float = 1.0):
+	play_audio(voices_ambience_player, voices, volume, pitch, transition_duration)
 
 func play_main_theme(pitch : float = 1.0):
 	play_audio(music_player, main_theme, -25, pitch, 0.25)
@@ -34,7 +55,7 @@ func play_forest_ambience(volume : float = reduced_volume_db, pitch : float = 1.
 	play_audio(ambience_player, forest_leaves, volume, pitch, transition_duration)
 
 func play_whispers_ambience(volume : float = reduced_volume_db, pitch : float = 1.0, transition_duration : float = 1.0):
-	play_audio(ambience_player, whispers, volume, pitch, transition_duration)
+	play_audio(whispers_ambience_player, whispers, volume, pitch, transition_duration)
 	
 func stop_ambience(transition_duration : float = 1.0):
 	stop_audio(ambience_player, transition_duration)

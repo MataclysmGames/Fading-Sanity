@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://b8xiefdovmwnd"]
+[gd_scene load_steps=13 format=3 uid="uid://b8xiefdovmwnd"]
 
 [ext_resource type="Script" path="res://scripts/home.gd" id="1_kcphs"]
 [ext_resource type="PackedScene" uid="uid://ka75h4icbjdj" path="res://scenes/player.tscn" id="2_x7odt"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://cfnhoug0428gg" path="res://assets/house.png" id="8_8k4eu"]
 [ext_resource type="PackedScene" uid="uid://c80w2htwd327w" path="res://scenes/old_man.tscn" id="9_gl3qd"]
 [ext_resource type="PackedScene" uid="uid://c07w3rth8ynm2" path="res://scenes/torch.tscn" id="11_mpp4o"]
+[ext_resource type="PackedScene" uid="uid://lug2mphfkkdw" path="res://scenes/moveable_wall.tscn" id="12_01grs"]
 
 [node name="Home" type="Node2D"]
 script = ExtResource("1_kcphs")
@@ -51,7 +52,7 @@ scene_to_load = "res://scenes/levels/bottom_path_1.tscn"
 [node name="Top Path Transition Trigger" parent="." instance=ExtResource("5_55qd4")]
 position = Vector2(1344, -96)
 scale = Vector2(4, 1)
-scene_to_load = "res://scenes/levels/home.tscn"
+scene_to_load = "res://scenes/levels/top_path_final.tscn"
 
 [node name="Middle Path Transition Trigger" parent="." instance=ExtResource("5_55qd4")]
 position = Vector2(1696, 224)
@@ -88,3 +89,11 @@ position = Vector2(1374, 67)
 [node name="Torch3" parent="." instance=ExtResource("11_mpp4o")]
 position = Vector2(1023, 410)
 rotation = 1.55415
+
+[node name="Wall1" parent="." instance=ExtResource("12_01grs")]
+position = Vector2(1376, 0)
+relative_movement = Vector2(-32, 0)
+
+[node name="Wall2" parent="." instance=ExtResource("12_01grs")]
+position = Vector2(1408, 0)
+relative_movement = Vector2(32, 0)

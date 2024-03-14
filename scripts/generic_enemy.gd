@@ -1,6 +1,8 @@
 class_name GenericEnemy
 extends CharacterBody2D
 
+signal hit()
+
 @export var max_health : float = 100.0
 @export var speed : float = 60.0
 @export var exp_given : float = 1.0
@@ -77,6 +79,7 @@ func take_damage(amount : float, knockback_direction : Vector2, player : Player)
 	if is_stunned:
 		return
 		
+	hit.emit()
 	health -= amount
 	if health <= 0.0 and is_alive:
 		is_alive = false

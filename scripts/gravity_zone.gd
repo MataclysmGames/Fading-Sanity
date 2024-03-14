@@ -18,7 +18,6 @@ func _ready() -> void:
 
 func apply_gravity_vector(new_gravity_vector : Vector2, force : bool = false, time_until_player_affected : float = 0.25):
 	if gravity_vector != new_gravity_vector or force:
-		print("New vector: %s" % [str(new_gravity_vector)])
 		gravity_vector = new_gravity_vector
 		particles.visible = true
 		particles.emission_rect_extents = (collision_shape_2d.shape as RectangleShape2D).size / 2.0

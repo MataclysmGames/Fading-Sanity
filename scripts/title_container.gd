@@ -26,7 +26,7 @@ func on_new_game():
 	SaveData.start_new()
 	BackgroundAudio.play_bell()
 	PlayerLoadInfo.load_animation = "death"
-	SceneLoader.fade_in_scene("res://scenes/levels/intro.tscn", 3.4, 1.0)
+	SceneLoader.fade_in_scene("res://scenes/levels/new_game_intro.tscn", 3.4, 1.0)
 
 func on_continue():
 	var last_scene : String = SaveData.get_last_scene()

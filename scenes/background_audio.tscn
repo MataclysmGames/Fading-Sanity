@@ -11,5 +11,14 @@ bus = &"Music"
 [node name="AmbiencePlayer" type="AudioStreamPlayer" parent="."]
 bus = &"Ambient"
 
+[node name="WhispersAmbiencePlayer" type="AudioStreamPlayer" parent="."]
+bus = &"Ambient"
+
+[node name="VoicesAmbiencePlayer" type="AudioStreamPlayer" parent="."]
+bus = &"Ambient"
+
 [node name="SFXPlayer" type="AudioStreamPlayer" parent="."]
+bus = &"SFX"
+
+[node name="FootstepPlayer" type="AudioStreamPlayer" parent="."]
 bus = &"SFX"
